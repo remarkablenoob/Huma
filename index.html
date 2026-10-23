@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Happy Birthday, Huma ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>tailwind.config={theme:{extend:{fontFamily:{serif:['Cormorant Garamond','serif'],disp:['Playfair Display','serif'],hand:['Dancing Script','cursive'],sans:['Inter','sans-serif']}}}}</script>
+<style>
+html,body{margin:0;background:#0b1026;font-family:Inter,sans-serif;-webkit-tap-highlight-color:transparent}
+.flame{transform-box:fill-box;transform-origin:50% 100%;animation:fl .45s ease-in-out infinite alternate}
+@keyframes fl{to{transform:scale(.85,1.15) rotate(4deg)}}
+.glass{background:rgba(255,255,255,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.25)}
+.noscroll::-webkit-scrollbar{display:none}.noscroll{scrollbar-width:none}
+.parch{background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='.8' numOctaves='3'/><feColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .1 0 0 0 .18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),radial-gradient(circle at 20% 10%,#f9ebc8,#e6c995);box-shadow:inset 0 0 60px rgba(120,70,20,.35),0 20px 60px rgba(0,0,0,.5)}
+@media(prefers-reduced-motion:reduce){.flame{animation:none}}
+</style>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.4/dist/framer-motion.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.7/babel.min.js"></script>
+</head>
+<body><div id="root"></div>
+<script type="text/babel">
+const {motion:M,AnimatePresence:AP,useInView}=Motion;
+const {useState,useEffect,useRef,useMemo}=React;
+const R=Math.random,UNLOCK=new Date(2026,10,2,0,0,0),Q=new URLSearchParams(location.search),PREV=Q.get('preview')==='true';
+const GOLD=['#ffd873','#f7b733','#fff3c4','#e89b2d'];
+const fx=(k,x=innerWidth/2,y=innerHeight/2)=>dispatchEvent(new CustomEvent('fx',{detail:{k,x,y}}));
+
+/* ---------- Particles + bursts (one canvas for everything) ---------- */
+const CFG={gate:{snow:90},load:{snow:70},c3:{snow:110,leaf:16,bokeh:20},c4:{bokeh:16,snow:25},c5:{snow:60,lantern:14,firefly:36,star:90}};
+function FX({mode}){
+ const ref=useRef(),m=useRef(mode);m.current=mode;
+ useEffect(()=>{
+  const cv=ref.current,g=cv.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2);
+  let W,H,amb=[],bur=[],last,raf;
+  const rs=()=>{W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0)};rs();
+  const mk=t=>{const p={t,x:R()*W,y:R()*H,ph:R()*6.28,a:.3+R()*.6,rot:R()*6.28};
+   if(t=='snow')Object.assign(p,{r:1+R()*2.5,vx:R()-.5,vy:.4+R()});
+   if(t=='leaf')Object.assign(p,{r:5+R()*5,vx:R()*.6-.2,vy:.5+R()*.7,vr:(R()-.5)*.05,c:['#e0802a','#c4561d','#d9a441'][R()*3|0]});
+   if(t=='bokeh')Object.assign(p,{r:15+R()*40,vx:R()*.2-.1,vy:-.1-R()*.2,a:.05+R()*.1});
+   if(t=='lantern')Object.assign(p,{r:7+R()*8,vx:0,vy:-.3-R()*.5,a:.8});
+   if(t=='firefly')Object.assign(p,{r:1.5+R()*1.5,vx:0,vy:0});
+   if(t=='star'){p.r=.4+R()*1.2;p.y=R()*H*.6}
+   return p};
+  const add=(n,o)=>{for(let i=0;i<n;i++)bur.push(o(i))};
+  const on=e=>{const{k,x,y}=e.detail;
+   if(k=='confetti')add(80,()=>({t:'conf',x,y,vx:(R()-.5)*12,vy:-R()*11-2,g:.28,life:130,w:5+R()*5,h:3+R()*4,rot:R()*6,vr:R()-.5,c:GOLD[R()*4|0]}));
+   if(k=='smoke')add(16,()=>({t:'smoke',x:x+(R()-.5)*50,y,vx:(R()-.5)*.8,vy:-.8-R(),r:4,life:100,c:'200,200,210'}));
+   if(k=='fire')for(let i=0;i<4;i++)setTimeout(()=>{const cx=W*(.2+R()*.6),cy=H*(.15+R()*.3),h=R()*360;add(70,()=>{const s=1+R()*5,a=R()*6.28;return{t:'spark',x:cx,y:cy,vx:Math.cos(a)*s,vy:Math.sin(a)*s,g:.05,life:80,r:2,c:`hsl(${h},95%,65%)`}})},i*450);
+   if(k=='bfly')add(14,()=>({t:'bf',x:R()*W,y:H+20,vx:0,vy:-.7-R()*.7,ph:R()*6,life:520,c:['#f9a8d4','#93c5fd','#fcd34d','#c4b5fd'][R()*4|0]}));
+   if(k=='shoot')add(1,()=>({t:'shoot',x:W*.85,y:H*.1,vx:-16,vy:6,life:50}));
+   if(k=='swirl')add(160,i=>({t:'swirl',cx:W/2,cy:H/2,ang:R()*6.28,rad:R()*40,vr:2+R()*4,va:.08+R()*.06,life:110+R()*40,r:1.5+R()*2.5,c:i%4?GOLD[R()*4|0]:'#d9822b'}));
+  };
+  const glow=p=>{let r=p.r,c='255,200,100',a=p.a;
+   if(p.t=='star'){a=p.a*(.5+.5*Math.sin(p.ph*3));c='255,255,255';r*=3}
+   if(p.t=='firefly'){a=.3+.7*Math.abs(Math.sin(p.ph));r*=4;c='255,230,120'}
+   if(p.t=='lantern'){r*=2.5;c='255,150,50'}
+   const gr=g.createRadialGradient(p.x,p.y,0,p.x,p.y,r);gr.addColorStop(0,`rgba(${c},${a})`);gr.addColorStop(1,`rgba(${c},0)`);g.fillStyle=gr;g.beginPath();g.arc(p.x,p.y,r,0,6.3);g.fill()};
+  const dot=p=>{g.beginPath();g.arc(p.x,p.y,p.r,0,6.3);g.fill()};
+  addEventListener('fx',on);addEventListener('resize',rs);
+  const tick=()=>{
+   if(last!==m.current){last=m.current;amb=[];const c=CFG[last]||{};for(const t in c)for(let i=0;i<c[t];i++)amb.push(mk(t))}
+   g.clearRect(0,0,W,H);
+   for(const p of amb){
+    p.ph+=.02;
+    if(p.t=='snow'||p.t=='leaf'){p.x+=p.vx+Math.sin(p.ph)*.5;p.y+=p.vy;p.rot+=p.vr||0}
+    else if(p.t=='firefly'){p.x+=Math.sin(p.ph)*.6;p.y+=Math.cos(p.ph*.7)*.5}
+    else if(p.t!='star'){p.x+=p.vx+Math.sin(p.ph)*.3;p.y+=p.vy}
+    if(p.y>H+20){p.y=-20;p.x=R()*W}if(p.y<-60){p.y=H+40;p.x=R()*W}
+    if(p.x>W+20)p.x=-10;if(p.x<-20)p.x=W+10;
+    g.save();
+    if(p.t=='snow'){g.globalAlpha=p.a;g.fillStyle='#fff';dot(p)}
+    else if(p.t=='leaf'){g.globalAlpha=p.a;g.translate(p.x,p.y);g.rotate(p.rot);g.fillStyle=p.c;g.beginPath();g.ellipse(0,0,p.r,p.r*.45,0,0,6.3);g.fill()}
+    else glow(p);
+    g.restore()}
+   bur=bur.filter(p=>p.life>0);
+   for(const p of bur){
+    p.life--;g.save();g.globalAlpha=Math.min(1,p.life/30);
+    if(p.t=='swirl'){p.ang+=p.va;p.rad+=p.vr;p.x=p.cx+Math.cos(p.ang)*p.rad;p.y=p.cy+Math.sin(p.ang)*p.rad*.7-(150-p.life)*.4;g.fillStyle=p.c;dot(p)}
+    else if(p.t=='shoot'){p.x+=p.vx;p.y+=p.vy;const gr=g.createLinearGradient(p.x,p.y,p.x-p.vx*6,p.y-p.vy*6);gr.addColorStop(0,'#fff');gr.addColorStop(1,'rgba(255,255,255,0)');g.strokeStyle=gr;g.lineWidth=2.5;g.beginPath();g.moveTo(p.x,p.y);g.lineTo(p.x-p.vx*6,p.y-p.vy*6);g.stroke()}
+    else if(p.t=='bf'){p.ph+=.25;p.x+=Math.sin(p.ph*.3)*1.4;p.y+=p.vy;const f=Math.abs(Math.sin(p.ph));g.fillStyle=p.c;g.translate(p.x,p.y);for(const s of[-1,1]){g.beginPath();g.ellipse(s*6*f,0,7*f+1,10,s*.3,0,6.3);g.fill()}}
+    else{p.x+=p.vx;p.y+=p.vy;if(p.g)p.vy+=p.g;
+     if(p.t=='conf'){p.rot+=p.vr;p.vx*=.99;g.translate(p.x,p.y);g.rotate(p.rot);g.fillStyle=p.c;g.fillRect(-p.w/2,-p.h/2,p.w,p.h)}
+     else if(p.t=='smoke'){p.r+=.5;g.fillStyle=`rgba(${p.c},.25)`;dot(p)}
+     else{g.fillStyle=p.c;dot(p)}}
+    g.restore()}
+   raf=requestAnimationFrame(tick)};
+  raf=requestAnimationFrame(tick);
+  return()=>{cancelAnimationFrame(raf);removeEventListener('fx',on);removeEventListener('resize',rs)}
+ },[]);
+ return <canvas ref={ref} className="fixed inset-0 z-10 pointer-events-none"/>}
+
+/* ---------- Kashmir backdrop ---------- */
+const FAR="M0 560L160 430 290 500 470 330 630 470 790 380 960 490 1150 360 1300 470 1440 420V660H0Z",
+ MID="M0 620L200 520 350 580 560 470 760 590 980 510 1200 600 1440 540V660H0Z",
+ CAPS="M470 330L440 372 462 362 478 380 500 365ZM790 380L765 410 785 402 800 416 818 404ZM1150 360L1122 400 1142 392 1158 408 1180 394Z";
+const SC={
+ gate:{id:'g',sky:['#b9d0e4','#f2f7fc'],far:'#8da8c1',mid:'#a7bcd0',lake:'#e2ecf5'},
+ load:{id:'d',sky:['#121a33','#3b4b70'],far:'#25314f',mid:'#1a2440',lake:'#0f1629'},
+ c3:{id:'c',sky:['#1b0f09','#7a421e'],far:'#4a2a1b',mid:'#2f190f',lake:'#1d100a',glow:1},
+ c4:{id:'t',bg:'linear-gradient(180deg,#4a1230 0%,#9c3358 38%,#f0d6c4 100%)'},
+ c5:{id:'n',sky:['#060a20','#1b2356'],far:'#161c3f',mid:'#0d1230',lake:'#0a0f29',boat:1,sun:1}};
+SC['404']=SC.load;
+function Scene({p}){
+ if(p.bg)return <div className="absolute inset-0" style={{background:p.bg}}/>;
+ const Boat=({x,y,s})=><g transform={`translate(${x} ${y}) scale(${s})`} fill="#04060f"><path d="M0 0Q70 18 140 0L128-9H12Z"/><path d="M34-9L46-30H104L116-9Z"/><circle cx="75" cy="-17" r="4" fill="#ffb347"/></g>;
+ return <div className="absolute inset-0" style={{background:`linear-gradient(${p.sky[0]},${p.sky[1]})`}}>
+  {p.sun&&<M.div className="absolute inset-0" style={{background:'linear-gradient(#ff9a4d,#c2456b 55%,#3b2a6b)'}} initial={{opacity:1}} animate={{opacity:0}} transition={{duration:10}}/>}
+  {p.glow&&<div className="absolute inset-0" style={{background:'radial-gradient(ellipse at 50% 70%,rgba(247,183,51,.35),transparent 60%)'}}/>}
+  <svg className="absolute bottom-0 left-0 w-full h-[75%]" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+   <clipPath id="lk"><rect y="650" width="1440" height="150"/></clipPath>
+   <path d={FAR} fill={p.far}/><path d={MID} fill={p.mid}/><path d={CAPS} fill="#fff" opacity=".75"/>
+   <rect y="650" width="1440" height="150" fill={p.lake}/>
+   <g clipPath="url(#lk)" opacity=".3" transform="translate(0 1300) scale(1 -1)"><path d={FAR} fill={p.far}/></g>
+   {p.boat&&<M.g animate={{x:[0,-60,0]}} transition={{duration:24,repeat:Infinity,ease:'easeInOut'}}><Boat x={980} y={705} s={1}/><Boat x={300} y={690} s={.6}/></M.g>}
+  </svg>
+  {p.id=='g'&&<div className="absolute inset-x-0 bottom-0 h-1/2" style={{background:'linear-gradient(transparent,rgba(255,255,255,.7))'}}/>}
+ </div>}
+
+/* ---------- Shared bits ---------- */
+const Pg=({cls='',exit,children})=><M.div initial={{opacity:0}} animate={{opacity:1}} exit={exit||{opacity:0}} transition={{duration:.9}} className={'relative z-20 '+cls}>{children}</M.div>;
+const Btn=p=><button {...p} className="glass rounded-full px-8 py-3 font-semibold tracking-wide text-white hover:scale-105 active:scale-95 transition"/>;
+
+/* ---------- Chapter 1 ---------- */
+function Gate({done}){
+ const[t,setT]=useState(UNLOCK-Date.now());
+ useEffect(()=>{const i=setInterval(()=>setT(UNLOCK-Date.now()),1000);return()=>clearInterval(i)},[]);
+ useEffect(()=>{if(t<=0)done()},[t<=0]);
+ const s=Math.max(0,t/1000|0),u=[['Days',s/86400|0],['Hours',s/3600%24|0],['Minutes',s/60%60|0],['Seconds',s%60]];
+ return <Pg cls="min-h-screen flex flex-col items-center justify-center text-center px-5 gap-5 text-[#1f3553]">
+  <h1 className="font-disp text-4xl md:text-6xl max-w-3xl leading-tight">Hold up. It’s not November 2nd yet! No cheating, Huma. 😉</h1>
+  <p className="font-serif italic text-xl md:text-3xl opacity-80">Patience is a virtue (even for dietitians). Come back at midnight.</p>
+  <div className="flex gap-3 md:gap-5 mt-4">{u.map(([l,v])=><div key={l} className="rounded-2xl bg-white/50 backdrop-blur border border-white/70 px-3 py-4 w-20 md:w-28 shadow-lg"><div className="font-disp text-3xl md:text-5xl tabular-nums">{String(v).padStart(2,'0')}</div><div className="text-[10px] md:text-xs tracking-widest opacity-70">{l}</div></div>)}</div>
+ </Pg>}
+
+/* ---------- Chapter 2 ---------- */
+function Load({done}){
+ const[p,setP]=useState(0);
+ useEffect(()=>{const t0=performance.now();let r,to;const f=t=>{const k=Math.min(1,(t-t0)/3000);setP(k*100|0);k<1?r=requestAnimationFrame(f):to=setTimeout(done,350)};r=requestAnimationFrame(f);return()=>{cancelAnimationFrame(r);clearTimeout(to)}},[]);
+ return <Pg cls="min-h-screen flex flex-col items-center justify-center gap-6 px-6 text-center">
+  <p className="font-serif italic text-2xl md:text-4xl">Preparing something special for Huma…</p>
+  <div className="w-72 max-w-full h-2 rounded-full bg-white/15 overflow-hidden"><div className="h-full rounded-full" style={{width:p+'%',background:'linear-gradient(90deg,#f7b733,#fff3c4)'}}/></div>
+  <span className="text-sm opacity-70 tabular-nums">{p}%</span></Pg>}
+function E404({go}){
+ return <Pg exit={{opacity:0,scale:1.5,filter:'blur(24px)'}} cls="min-h-screen flex flex-col items-center justify-center gap-5 px-6 text-center">
+  <M.h1 animate={{x:[0,-3,3,0]}} transition={{repeat:Infinity,duration:.25,repeatDelay:2.5}} className="font-disp font-bold text-4xl md:text-6xl">404 - Surprise Not Found</M.h1>
+  <p className="font-serif italic text-xl md:text-3xl opacity-90 max-w-xl">Looks like your birthday surprise got lost in the Gulmarg snowdrifts.</p>
+  <Btn onClick={go}>Refresh &amp; Find It 🎉</Btn></Pg>}
+
+/* ---------- Chapter 3 ---------- */
+const QS=['Today is all about celebrating you.','Wishing you laughter, warmth, and unforgettable memories.','Here’s to another year of being incredible.'];
+const CAP=['Our favorite memories','Adventures together','That unforgettable day','And so many more to come'];
+const LETTER=`Dear Huma,
+
+Happy Birthday! I hope today brings lots of smiles, laughter, great food, wonderful memories, and everything that makes you happiest. Thank you for being such an amazing person. Here’s to another year filled with exciting adventures, new opportunities, unforgettable moments, and plenty of reasons to celebrate.
+
+Have an incredible birthday!
+
+With all my love,
+Your loving husband`;
+function Photo({n}){
+ const[bad,setBad]=useState(false);
+ return bad?<div className="h-64 rounded-2xl grid place-items-center text-5xl" style={{background:'linear-gradient(135deg,#7a4a2b,#e0a24a)'}}>📷</div>
+  :<img src={`./photo${n}.jpg`} onError={()=>setBad(true)} className="h-64 w-full object-cover rounded-2xl" alt=""/>}
+function Letter(){
+ const ref=useRef(),v=useInView(ref,{once:true,amount:.3}),[n,setN]=useState(0);
+ useEffect(()=>{if(!v)return;let i=0,id;const s=setTimeout(()=>{id=setInterval(()=>{setN(++i);if(i>=LETTER.length)clearInterval(id)},28)},1600);return()=>{clearTimeout(s);clearInterval(id)}},[v]);
+ return <M.div ref={ref} initial={{clipPath:'inset(0 0 100% 0)'}} animate={v?{clipPath:'inset(0 0 0% 0)'}:{}} transition={{duration:1.6,ease:'easeInOut'}} className="parch max-w-2xl mx-auto rounded-md p-8 md:p-12 text-[#4a2e1a] font-hand text-2xl md:text-3xl leading-relaxed whitespace-pre-line">
+  <span>{LETTER.slice(0,n)}</span><span className="opacity-0">{LETTER.slice(n)}</span></M.div>}
+function C3({next}){
+ const[q,setQ]=useState(0);
+ useEffect(()=>{const i=setInterval(()=>setQ(x=>(x+1)%3),3800);return()=>clearInterval(i)},[]);
+ let k=0;
+ return <Pg cls="pb-24">
+  <section className="min-h-screen flex flex-col items-center justify-center text-center px-6">
+   <h1 onClick={e=>fx('confetti',e.clientX,e.clientY)} className="font-disp font-bold text-5xl md:text-8xl cursor-pointer select-none leading-tight" style={{color:'#ffe29a',textShadow:'0 0 30px rgba(247,183,51,.6)'}}>
+    {['Happy','Birthday,','Huma'].map(w=><span key={w} className="inline-block mr-4">{[...w].map(c=><M.span key={k} className="inline-block" initial={{opacity:0,y:30,filter:'blur(8px)'}} animate={{opacity:1,y:0,filter:'blur(0px)'}} transition={{delay:.8+.07*k++,duration:.6}}>{c}</M.span>)}</span>)}
+    <M.span className="inline-block" animate={{scale:[1,1.25,1]}} transition={{repeat:Infinity,duration:1.4}}>❤️</M.span>
+   </h1>
+   <div className="h-24 mt-8 max-w-2xl"><AP mode="wait"><M.p key={q} initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-10}} transition={{duration:.9}} className="font-serif italic text-2xl md:text-4xl text-amber-100">{QS[q]}</M.p></AP></div>
+   <M.span animate={{y:[0,8,0]}} transition={{repeat:Infinity,duration:2}} className="mt-10 opacity-70">↓</M.span>
+  </section>
+  <section className="py-16">
+   <h2 className="font-disp text-3xl md:text-5xl text-center mb-10 text-amber-100">Memory Lane</h2>
+   <div className="noscroll flex gap-6 overflow-x-auto snap-x snap-mandatory px-8 md:px-[20vw] pb-8">
+    {CAP.map((c,i)=><M.div key={i} whileHover={{rotateY:8,rotateX:-5,scale:1.05}} style={{transformPerspective:900}} className="glass snap-center shrink-0 w-72 rounded-3xl p-3 shadow-2xl"><Photo n={i+1}/><p className="font-serif italic text-2xl text-center py-3">{c}</p></M.div>)}
+   </div>
+  </section>
+  <section className="px-5 py-16"><Letter/></section>
+  <div className="text-center"><Btn onClick={next}>Join the feast 🍰</Btn></div>
+ </Pg>}
+
+/* ---------- Chapter 4 ---------- */
+const NUT=[['Joy','100% Daily Value'],['Stress','0g'],['Love','Infinite']];
+const Dish=({id,name,tip,setTip,onClick,onDoubleClick,children})=>
+ <div className="relative cursor-pointer" onMouseEnter={()=>setTip(id)} onMouseLeave={()=>setTip(null)} onClick={e=>{setTip(id);onClick&&onClick(e)}} onDoubleClick={onDoubleClick}>
+  <AP>{tip==id&&<M.div initial={{opacity:0,y:8,scale:.9}} animate={{opacity:1,y:0,scale:1}} exit={{opacity:0}} className="absolute z-30 left-1/2 -translate-x-1/2 -top-24 w-48 rounded-xl bg-[#fff8ee] text-[#5b1a33] shadow-xl p-3 text-xs text-left">
+   <b className="block font-disp text-sm border-b border-[#5b1a33]/30 mb-1">{name}: nutrition facts</b>{NUT.map(([a,b])=><div key={a} className="flex justify-between"><span>{a}</span><b>{b}</b></div>)}</M.div>}</AP>
+  {children}</div>;
+function C4({next}){
+ const[lit,setLit]=useState(true),[cut,setCut]=useState(false),[tip,setTip]=useState(null),cr=useRef();
+ const blow=e=>{e.stopPropagation();if(!lit)return;setLit(false);const b=cr.current.getBoundingClientRect(),x=b.x+b.width/2;fx('smoke',x,b.y+10);fx('confetti',x,b.y)};
+ const T={tip,setTip};
+ return <Pg cls="min-h-screen px-4 py-12 flex flex-col items-center text-center gap-8">
+  <h2 className="font-disp text-4xl md:text-6xl text-amber-100">The Dietitian’s Feast</h2>
+  <p className="font-serif italic text-xl md:text-3xl text-rose-100 -mt-4">{lit?'Make a wish and tap the candles…':'Now tap the cake 🍰'}</p>
+  <div className="w-full max-w-5xl rounded-[2rem] p-6 md:p-10 pt-24 grid md:grid-cols-3 gap-8 items-end justify-items-center" style={{background:'repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 2px,transparent 2px 90px),linear-gradient(#a8693a,#7a4524)',boxShadow:'0 30px 60px rgba(40,10,20,.5)'}}>
+   <Dish id="tart" name="Winter fruit tart" {...T}>
+    <svg viewBox="0 0 160 120" className="w-44 drop-shadow-xl"><ellipse cx="80" cy="100" rx="75" ry="12" fill="#f5e6d3"/><ellipse cx="80" cy="78" rx="58" ry="22" fill="#c98a4b"/><ellipse cx="80" cy="72" rx="52" ry="18" fill="#fff1d6"/>
+     {[[55,70,'#d6264b'],[105,70,'#d6264b'],[80,64,'#d6264b'],[68,76,'#8cc63f'],[94,76,'#8cc63f'],[80,74,'#ff9a2e'],[60,64,'#3b3a8a'],[100,64,'#3b3a8a']].map(([x,y,c],i)=><circle key={i} cx={x} cy={y} r="7" fill={c}/>)}
+     <path d="M76 58q4-12 12-6-4 8-12 6Z" fill="#3f9a4a"/></svg></Dish>
+   <div className="flex flex-col items-center gap-3">
+    <Dish id="cake" name="Birthday cake" {...T} onClick={()=>setCut(true)} onDoubleClick={()=>fx('fire')}>
+     <svg viewBox="0 0 240 230" className="w-64 md:w-72 drop-shadow-2xl"><ellipse cx="120" cy="205" rx="115" ry="18" fill="#f5e6d3"/>
+      <rect x="25" y="150" width="190" height="52" rx="12" fill="#7d2146"/><rect x="48" y="104" width="144" height="50" rx="12" fill="#b83a64"/><rect x="70" y="64" width="100" height="44" rx="12" fill="#f6d9c8"/>
+      <path d="M25 160q15 18 30 0t30 0 30 0 30 0 30 0 30 0 30 0" fill="none" stroke="#fff6ea" strokeWidth="10" strokeLinecap="round"/>
+      <path d="M48 114q12 14 24 0t24 0 24 0 24 0 24 0 24 0" fill="none" stroke="#fff6ea" strokeWidth="8" strokeLinecap="round"/>
+      <ellipse cx="120" cy="66" rx="50" ry="8" fill="#fff6ea"/>
+      {[[88,60],[152,60]].map(([x,y])=><circle key={x} cx={x} cy={y} r="7" fill="#e0283e"/>)}<circle cx="120" cy="68" r="5" fill="#3b3a8a"/>
+      <g ref={cr} onClick={blow} className="cursor-pointer">
+       {[100,120,140].map((x,i)=><g key={x}><rect x={x-3} y="32" width="6" height="32" rx="2" fill={['#ffd873','#ff9db5','#9ad4ff'][i]}/>{lit&&<ellipse className="flame" cx={x} cy="24" rx="4.5" ry="9" fill="#ffb02e" style={{filter:'drop-shadow(0 0 6px #ffcf5a)'}}/>}</g>)}
+       <rect x="90" y="5" width="60" height="60" fill="transparent"/></g></svg></Dish>
+    <AP>{cut&&<M.div initial={{y:-50,opacity:0,scale:.6}} animate={{y:0,opacity:1,scale:1}} transition={{type:'spring',damping:12}} className="flex flex-col items-center">
+     <svg viewBox="0 0 120 90" className="w-36"><ellipse cx="60" cy="68" rx="55" ry="14" fill="#fff"/><path d="M25 48L95 38V46L25 56Z" fill="#f6d9c8"/><path d="M25 56L95 46V54L25 64Z" fill="#b83a64"/><path d="M25 64L95 54V62L25 72Z" fill="#7d2146"/><path d="M25 48L95 38L110 44L40 54Z" fill="#fff6ea"/></svg>
+     <p className="font-serif italic text-xl text-amber-100 max-w-xs">✨ May all your wishes come true (and yes, you get the biggest slice).</p></M.div>}</AP>
+   </div>
+   <Dish id="parfait" name="Layered dessert" {...T}>
+    <svg viewBox="0 0 100 150" className="w-32 drop-shadow-xl"><clipPath id="gl"><path d="M15 20L85 20L72 130Q50 140 28 130Z"/></clipPath>
+     <g clipPath="url(#gl)"><rect y="100" width="100" height="45" fill="#9b1d4a"/><rect y="78" width="100" height="22" fill="#fff3e2"/><rect y="58" width="100" height="20" fill="#d94f7a"/><rect y="40" width="100" height="18" fill="#fff3e2"/><rect y="20" width="100" height="20" fill="#e7b46a"/></g>
+     <path d="M15 20L85 20L72 130Q50 140 28 130Z" fill="rgba(255,255,255,.2)" stroke="#fff" strokeWidth="2"/><circle cx="40" cy="16" r="8" fill="#e0283e"/><circle cx="60" cy="14" r="7" fill="#3b3a8a"/><path d="M48 10q6-10 14-4-4 8-14 4Z" fill="#3f9a4a"/></svg></Dish>
+   <div className="relative md:col-span-3 max-w-md rounded-lg bg-[#fff6e3] text-[#5b1a33] p-6 text-left shadow-xl" style={{border:'2px dashed #c9983a'}}>
+    <div className="absolute -top-4 -right-4 w-14 h-14 rounded-full grid place-items-center text-2xl text-red-100 shadow-lg" style={{background:'radial-gradient(#d4333f,#8a1220)'}}>♥</div>
+    <h3 className="font-disp text-lg mb-1">Clinical Exemption Certificate</h3>
+    <p className="font-serif text-xl italic leading-snug">Official Clinical Order: Today, all calories are converted directly into pure joy. Zero macros counted by order of the Chief Dietitian.</p></div>
+  </div>
+  <Btn onClick={next}>Off to Dal Lake 🏮</Btn>
+ </Pg>}
+
+/* ---------- Chapter 5 ---------- */
+function C5(){
+ const[show,setShow]=useState(false);
+ useEffect(()=>{const t=setTimeout(()=>setShow(true),3500);return()=>clearTimeout(t)},[]);
+ return <Pg cls="min-h-screen flex flex-col items-center justify-center text-center px-5 gap-10 py-16">
+  <button aria-label="Moon" onClick={()=>fx('shoot')} className="fixed top-20 right-[12%] w-16 h-16 md:w-24 md:h-24 rounded-full z-30" style={{background:'radial-gradient(circle at 35% 35%,#fffbe8,#f3e3a8 60%,#d9c27a)',boxShadow:'0 0 60px 20px rgba(255,236,170,.35)'}}/>
+  <M.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1,duration:1.5}} className="font-serif italic text-3xl md:text-5xl text-amber-100 max-w-3xl leading-snug">Every birthday is the beginning of another amazing chapter.</M.p>
+  <AP>{show&&<M.div initial={{opacity:0,scale:.9,y:30}} animate={{opacity:1,scale:1,y:0}} transition={{duration:1.4}} className="glass rounded-3xl p-8 md:p-12 max-w-xl shadow-2xl" style={{background:'rgba(255,170,60,.12)'}}>
+   <h2 onClick={e=>fx('confetti',e.clientX,e.clientY)} className="font-disp font-bold text-4xl md:text-5xl text-amber-200 cursor-pointer select-none">Happy Birthday, Huma ❤️</h2>
+   <p className="font-serif italic text-2xl md:text-3xl mt-4 leading-snug">Thank you for making the world a little brighter. Wishing you happiness, good health, and endless love in the year ahead.</p></M.div>}</AP>
+ </Pg>}
+
+/* ---------- App: stages, audio, easter eggs ---------- */
+function fade(a,to,ms=2500){
+ clearInterval(a._t);if(to>0&&a.paused)a.play().catch(()=>{});
+ const from=a.volume,t0=Date.now();
+ a._t=setInterval(()=>{const k=Math.min(1,(Date.now()-t0)/ms);a.volume=Math.max(0,Math.min(1,from+(to-from)*k));if(k>=1){clearInterval(a._t);if(!to)a.pause()}},50)}
+function App(){
+ const[st,setSt]=useState((PREV&&!Q.get('gate'))||Date.now()>=UNLOCK?'load':'gate');
+ const[on,setOn]=useState(false),[ask,setAsk]=useState(true);
+ const au=useMemo(()=>{const g=new Audio('./Goblin.mp3'),b=new Audio('./Birthday.mp3');g.loop=b.loop=true;g.volume=b.volume=0;return{g,b}},[]);
+ useEffect(()=>{
+  if(!on){fade(au.g,0,400);fade(au.b,0,400)}
+  else if(st=='c3'){fade(au.b,0,1000);fade(au.g,.7)}
+  else if(st=='c4'||st=='c5'){fade(au.g,0,3500);fade(au.b,.75,3500)}
+  else{fade(au.g,0,800);fade(au.b,0,800)}
+ },[on,st]);
+ useEffect(()=>{document.body.style.overflowY=['c3','c4','c5'].includes(st)?'auto':'hidden';scrollTo(0,0)},[st]);
+ useEffect(()=>{let t;const d=()=>{t=setTimeout(()=>fx('bfly'),3000)},u=()=>clearTimeout(t);
+  addEventListener('pointerdown',d);addEventListener('pointerup',u);addEventListener('pointercancel',u);
+  return()=>{removeEventListener('pointerdown',d);removeEventListener('pointerup',u);removeEventListener('pointercancel',u)}},[]);
+ const p=SC[st],mode=st=='404'?'load':st;
+ return <div className="relative min-h-screen text-white font-sans overflow-x-hidden">
+  <div className="fixed inset-0 z-0"><AP><M.div key={p.id} className="absolute inset-0" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} transition={{duration:1.2}}><Scene p={p}/></M.div></AP></div>
+  <FX mode={mode}/>
+  <AP mode="wait">
+   {st=='gate'&&<Gate key="g" done={()=>setSt('load')}/>}
+   {st=='load'&&<Load key="l" done={()=>setSt('404')}/>}
+   {st=='404'&&<E404 key="4" go={()=>{fx('swirl');setSt('c3')}}/>}
+   {st=='c3'&&<C3 key="3" next={()=>setSt('c4')}/>}
+   {st=='c4'&&<C4 key="c4" next={()=>setSt('c5')}/>}
+   {st=='c5'&&<C5 key="5"/>}
+  </AP>
+  <AP>{ask&&!on&&<M.div initial={{opacity:0,y:-20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}} className="fixed top-20 left-1/2 -translate-x-1/2 z-50 glass rounded-2xl px-5 py-3 flex items-center gap-4 text-sm w-[92%] max-w-xl text-white" style={{background:'rgba(20,30,55,.6)'}}>
+   <span className="flex-1">For the best cinematic experience, enable sound 🎵</span>
+   <button onClick={()=>setOn(true)} className="rounded-full bg-amber-300 text-slate-900 font-semibold px-4 py-1.5 whitespace-nowrap">Turn On Audio</button>
+   <button onClick={()=>setAsk(false)} aria-label="Dismiss" className="opacity-60">✕</button></M.div>}</AP>
+  <button onClick={()=>setOn(!on)} aria-label="Toggle music" className="fixed top-4 right-4 z-50 glass rounded-full pl-2 pr-4 py-2 flex items-center gap-3 text-white" style={{background:'rgba(20,30,55,.5)'}}>
+   <M.div animate={on?{rotate:360}:{}} transition={{repeat:Infinity,duration:4,ease:'linear'}} className="w-9 h-9 rounded-full" style={{background:'#222',boxShadow:'inset 0 0 0 11px #1a1a1a,inset 0 0 0 13px #f7b733'}}/>
+   <span className="flex items-end gap-0.5 h-5">{[0,1,2,3].map(i=><M.i key={i} className="block w-0.5 h-full bg-amber-200 rounded origin-bottom" animate={on?{scaleY:[.2,1,.35,.8,.2]}:{scaleY:.2}} transition={{repeat:Infinity,duration:.9,delay:i*.15}}/>)}</span>
+   <span className="text-xs">{on?'❚❚':'▶'}</span></button>
+  {PREV&&<div className="fixed bottom-3 left-3 z-50 flex gap-1 text-xs">{['gate','load','404','c3','c4','c5'].map(s=><button key={s} onClick={()=>setSt(s)} className="glass rounded px-2 py-1 text-white" style={{background:'rgba(20,30,55,.6)'}}>{s}</button>)}</div>}
+ </div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>
