@@ -193,7 +193,7 @@ function SeoulCh({next}){
   <M.h1 initial={{scale:.8,opacity:0}} animate={{scale:1,opacity:1}} transition={{delay:1,duration:1.2}} className="text-5xl md:text-8xl font-bold leading-tight" style={{color:'#ffd6e8',textShadow:'0 0 30px #ff6b9d'}}>생일 축하해요,<br/>Huma ❤️</M.h1>
   <p className="font-serif italic text-2xl text-pink-100 max-w-md">(“Saengil chukha-haeyo” means Happy Birthday in Korean)</p>
   <div onClick={()=>{setI((i+1)%BAN.length);sfx('pop')}} className="glass rounded-3xl p-6 w-full max-w-md min-h-[17rem] flex flex-col justify-between cursor-pointer" style={{background:'rgba(20,10,40,.45)'}}>
-   <p className="text-sm tracking-widest text-pink-200">🎬 K-DRAMA BANTER · TAP FOR NEXT</p>
+   <p className="text-sm tracking-widest text-pink-200">🤫 A FEW QUIET TRUTHS · TAP TAP</p>
    <AP mode="wait"><M.div key={i} initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} exit={{opacity:0}}>
     <p className="font-disp text-xl text-amber-200 mb-3">{BAN[i][0]}</p><p className="font-serif text-2xl leading-snug">{BAN[i][1]}</p></M.div></AP>
    <div className="flex justify-center gap-2">{BAN.map((_,j)=><i key={j} className="block w-2.5 h-2.5 rounded-full" style={{background:j==i?'#ff9ec4':'rgba(255,255,255,.3)'}}/>)}</div>
