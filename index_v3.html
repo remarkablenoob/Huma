@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Happy Birthday, Huma ❤️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&family=Noto+Serif+KR:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        serif: ['Cormorant Garamond', 'serif'],
+        disp: ['Playfair Display', 'serif'],
+        hand: ['Dancing Script', 'cursive'],
+        kr: ['Noto Serif KR', 'serif'],
+        sans: ['Plus Jakarta Sans', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #070b19;
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+.flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: fl 0.4s ease-in-out infinite alternate;
+}
+@keyframes fl {
+  0% { transform: scale(0.9, 1.1) rotate(-3deg); filter: drop-shadow(0 0 6px #ffbd38) drop-shadow(0 0 14px #ff5900); }
+  100% { transform: scale(1.1, 0.9) rotate(4deg); filter: drop-shadow(0 0 10px #ffe578) drop-shadow(0 0 22px #ff3700); }
+}
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.glass-gold {
+  background: linear-gradient(135deg, rgba(255, 215, 130, 0.12), rgba(120, 60, 20, 0.28));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 215, 130, 0.35);
+}
+.glass-card {
+  background: rgba(25, 18, 38, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 215, 130, 0.25);
+}
+.noscroll::-webkit-scrollbar { display: none; }
+.noscroll { scrollbar-width: none; }
+.parch {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence baseFrequency='.75' numOctaves='3'/><feColorMatrix values='0 0 0 0 .38 0 0 0 0 .28 0 0 0 0 .15 0 0 0 .16 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+              radial-gradient(circle at 20% 15%, #fff7e4 0%, #fae8c3 40%, #e8c991 100%);
+  box-shadow: inset 0 0 70px rgba(110, 60, 15, 0.3), 0 25px 70px rgba(0,0,0,0.55);
+}
+.stamp-seal {
+  background: radial-gradient(circle at 35% 35%, #e63946, #9b111e 75%, #59000a);
+  box-shadow: 0 6px 18px rgba(155, 17, 30, 0.45), inset 0 2px 5px rgba(255,255,255,0.4);
+}
+</style>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.4/dist/framer-motion.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.24.7/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { motion: M, AnimatePresence: AP, useInView } = Motion;
+const { useState, useEffect, useRef, useMemo } = React;
+const R = Math.random;
+const UNLOCK = new Date(2026, 10, 2, 0, 0, 0); // Nov 2, 2026
+const Q = new URLSearchParams(location.search);
+const PREV = Q.get('preview') === 'true';
+
+/* Web Audio Synthesizer */
+class SoundEngine {
+  constructor() { this.ctx = null; }
+  init() {
+    if (!this.ctx) {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (AC) this.ctx = new AC();
+    }
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+  }
+  playChime() {
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, now + i * 0.09);
+      gain.gain.setValueAtTime(0.18, now + i * 0.09);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.09 + 0.9);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now + i * 0.09);
+      osc.stop(now + i * 0.09 + 1.0);
+    });
+  }
+  playWhoosh() {
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(280, now);
+    osc.frequency.exponentialRampToValueAtTime(50, now + 0.65);
+    gain.gain.setValueAtTime(0.24, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.7);
+  }
+  playTada() {
+    this.init();
+    if (!this.ctx) return;
+    const now = this.ctx.currentTime;
+    const notes = [440, 554.37, 659.25, 880];
+    notes.forEach((freq, idx) => {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now + (idx === 3 ? 0.32 : idx * 0.09));
+      const dur = idx === 3 ? 1.2 : 0.22;
+      gain.gain.setValueAtTime(0.2, now + (idx === 3 ? 0.32 : idx * 0.09));
+      gain.gain.exponentialRampToValueAtTime(0.001, now + (idx === 3 ? 0.32 : idx * 0.09) + dur);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now + (idx === 3 ? 0.32 : idx * 0.09));
+      osc.stop(now + (idx === 3 ? 0.32 : idx * 0.09) + dur + 0.1);
+    });
+  }
+}
+const sounds = new SoundEngine();
+
+/* Global Event Dispatcher */
+const fx = (k, x = innerWidth / 2, y = innerHeight / 2) => dispatchEvent(new CustomEvent('fx', { detail: { k, x, y } }));
+
+/* ---------- Canvas Particle System ---------- */
+const CFG = {
+  gate: { snow: 85 },
+  load: { snow: 70 },
+  '404': { snow: 85 },
+  seoul: { snow: 95, kheart: 18, bokeh: 16 },
+  c3: { snow: 90, leaf: 20, bokeh: 22 },
+  reasons: { bokeh: 24, kheart: 14, snow: 35 },
+  coupons: { bokeh: 26, snow: 35 },
+  c4: { bokeh: 22, snow: 30 },
+  c5: { snow: 50, lantern: 18, firefly: 36, star: 95 }
+};
+const GOLD = ['#ffd873', '#f7b733', '#fff3c4', '#e89b2d', '#f43f5e'];
+
+function FX({ mode }) {
+  const ref = useRef(), m = useRef(mode);
+  m.current = mode;
+
+  useEffect(() => {
+    const cv = ref.current, g = cv.getContext('2d');
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    let W, H, amb = [], bur = [], last, raf;
+
+    const rs = () => {
+      W = innerWidth;
+      H = innerHeight;
+      cv.width = W * dpr;
+      cv.height = H * dpr;
+      g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    rs();
+
+    const mk = t => {
+      const p = { t, x: R() * W, y: R() * H, ph: R() * 6.28, a: 0.3 + R() * 0.6, rot: R() * 6.28 };
+      if (t === 'snow') Object.assign(p, { r: 1 + R() * 2.8, vx: R() - 0.5, vy: 0.5 + R() * 1.2 });
+      if (t === 'leaf') Object.assign(p, { r: 5 + R() * 6, vx: R() * 0.7 - 0.2, vy: 0.6 + R() * 0.8, vr: (R() - 0.5) * 0.05, c: ['#e0802a', '#c4561d', '#d9a441', '#b93815'][R() * 4 | 0] });
+      if (t === 'bokeh') Object.assign(p, { r: 16 + R() * 38, vx: R() * 0.2 - 0.1, vy: -0.15 - R() * 0.25, a: 0.04 + R() * 0.08 });
+      if (t === 'kheart') Object.assign(p, { r: 7 + R() * 8, vx: (R() - 0.5) * 0.4, vy: -0.4 - R() * 0.6, vr: (R() - 0.5) * 0.03, a: 0.35 + R() * 0.45, c: ['#ff758c', '#ff7eb3', '#ffa8a8'][R() * 3 | 0] });
+      if (t === 'lantern') Object.assign(p, { r: 8 + R() * 10, vx: Math.sin(p.ph) * 0.2, vy: -0.35 - R() * 0.45, a: 0.85 });
+      if (t === 'firefly') Object.assign(p, { r: 1.5 + R() * 1.5, vx: 0, vy: 0 });
+      if (t === 'star') { p.r = 0.5 + R() * 1.4; p.y = R() * H * 0.65; }
+      return p;
+    };
+
+    const add = (n, o) => { for (let i = 0; i < n; i++) bur.push(o(i)); };
+
+    const on = e => {
+      const { k, x, y } = e.detail;
+      if (k === 'confetti') {
+        sounds.playTada();
+        add(95, () => ({ t: 'conf', x, y, vx: (R() - 0.5) * 14, vy: -R() * 12 - 3, g: 0.28, life: 140, w: 6 + R() * 6, h: 3 + R() * 4, rot: R() * 6, vr: R() - 0.5, c: GOLD[R() * GOLD.length | 0] }));
+      }
+      if (k === 'smoke') {
+        sounds.playWhoosh();
+        add(45, () => ({ t: 'smoke', x: x + (R() - 0.5) * 40, y: y + (R() - 0.5) * 15, vx: (R() - 0.5) * 1.8, vy: -1.4 - R() * 2.2, r: 8 + R() * 12, maxR: 28 + R() * 20, life: 110, c: '235,235,245' }));
+      }
+      if (k === 'fire') {
+        sounds.playTada();
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            const cx = W * (0.15 + R() * 0.7), cy = H * (0.15 + R() * 0.35), h = R() * 360;
+            add(75, () => {
+              const s = 1.5 + R() * 6, a = R() * 6.28;
+              return { t: 'spark', x: cx, y: cy, vx: Math.cos(a) * s, vy: Math.sin(a) * s, g: 0.05, life: 85, r: 2.2, c: `hsl(${h},95%,65%)` };
+            });
+          }, i * 360);
+        }
+      }
+      if (k === 'bfly') {
+        add(18, () => ({ t: 'bf', x: R() * W, y: H + 30, vx: 0, vy: -0.8 - R() * 0.8, ph: R() * 6, life: 540, c: ['#ffb3c6', '#a5b4fc', '#fde047', '#e879f9'][R() * 4 | 0] }));
+      }
+      if (k === 'shoot') {
+        sounds.playChime();
+        add(1, () => ({ t: 'shoot', x: W * 0.88, y: H * 0.12, vx: -18, vy: 7, life: 48 }));
+      }
+      if (k === 'swirl') {
+        sounds.playChime();
+        add(180, i => ({ t: 'swirl', cx: W / 2, cy: H / 2, ang: R() * 6.28, rad: R() * 30, vr: 2.5 + R() * 4, va: 0.08 + R() * 0.06, life: 120 + R() * 40, r: 1.8 + R() * 2.5, c: i % 4 ? GOLD[R() * 4 | 0] : '#ff5a79' }));
+      }
+      if (k === 'heartburst') {
+        sounds.playChime();
+        add(25, () => ({ t: 'burstheart', x, y, vx: (R() - 0.5) * 8, vy: -R() * 7 - 2, life: 90, scale: 0.8 + R() * 0.8, c: ['#ff4d6d', '#ff758f', '#ffb3c6'][R() * 3 | 0] }));
+      }
+    };
+
+    const drawHeart = (ctx, x, y, size, color, alpha = 1) => {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      const topCurveHeight = size * 0.3;
+      ctx.moveTo(0, topCurveHeight);
+      ctx.bezierCurveTo(0, 0, -size / 2, 0, -size / 2, topCurveHeight);
+      ctx.bezierCurveTo(-size / 2, (size + topCurveHeight) / 2, 0, size, 0, size * 1.15);
+      ctx.bezierCurveTo(0, size, size / 2, (size + topCurveHeight) / 2, size / 2, topCurveHeight);
+      ctx.bezierCurveTo(size / 2, 0, 0, 0, 0, topCurveHeight);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    };
+
+    const glow = p => {
+      let r = p.r, c = '255,200,100', a = p.a;
+      if (p.t === 'star') { a = p.a * (0.4 + 0.6 * Math.sin(p.ph * 3)); c = '255,255,255'; r *= 2.8; }
+      if (p.t === 'firefly') { a = 0.3 + 0.7 * Math.abs(Math.sin(p.ph)); r *= 4.5; c = '255,235,130'; }
+      if (p.t === 'lantern') { r *= 2.8; c = '255,160,60'; }
+      const gr = g.createRadialGradient(p.x, p.y, 0, p.x, p.y, r);
+      gr.addColorStop(0, `rgba(${c},${a})`);
+      gr.addColorStop(1, `rgba(${c},0)`);
+      g.fillStyle = gr;
+      g.beginPath();
+      g.arc(p.x, p.y, r, 0, 6.28);
+      g.fill();
+    };
+
+    const dot = p => { g.beginPath(); g.arc(p.x, p.y, p.r, 0, 6.28); g.fill(); };
+
+    addEventListener('fx', on);
+    addEventListener('resize', rs);
+
+    const tick = () => {
+      if (last !== m.current) {
+        last = m.current;
+        amb = [];
+        const c = CFG[last] || {};
+        for (const t in c) for (let i = 0; i < c[t]; i++) amb.push(mk(t));
+      }
+      g.clearRect(0, 0, W, H);
+
+      for (const p of amb) {
+        p.ph += 0.02;
+        if (p.t === 'snow' || p.t === 'leaf') {
+          p.x += p.vx + Math.sin(p.ph) * 0.6;
+          p.y += p.vy;
+          p.rot += p.vr || 0;
+        } else if (p.t === 'kheart') {
+          p.x += Math.sin(p.ph) * 0.8;
+          p.y += p.vy;
+        } else if (p.t === 'firefly') {
+          p.x += Math.sin(p.ph) * 0.8;
+          p.y += Math.cos(p.ph * 0.7) * 0.6;
+        } else if (p.t !== 'star') {
+          p.x += p.vx + Math.sin(p.ph) * 0.3;
+          p.y += p.vy;
+        }
+
+        if (p.y > H + 30) { p.y = -30; p.x = R() * W; }
+        if (p.y < -60) { p.y = H + 40; p.x = R() * W; }
+        if (p.x > W + 30) p.x = -15;
+        if (p.x < -30) p.x = W + 15;
+
+        g.save();
+        if (p.t === 'snow') {
+          g.globalAlpha = p.a;
+          g.fillStyle = '#fff';
+          dot(p);
+        } else if (p.t === 'leaf') {
+          g.globalAlpha = p.a;
+          g.translate(p.x, p.y);
+          g.rotate(p.rot);
+          g.fillStyle = p.c;
+          g.beginPath();
+          g.ellipse(0, 0, p.r, p.r * 0.45, 0, 0, 6.28);
+          g.fill();
+        } else if (p.t === 'kheart') {
+          drawHeart(g, p.x, p.y, p.r, p.c, p.a);
+        } else {
+          glow(p);
+        }
+        g.restore();
+      }
+
+      bur = bur.filter(p => p.life > 0);
+      for (const p of bur) {
+        p.life--;
+        g.save();
+        g.globalAlpha = Math.min(1, p.life / 25);
+
+        if (p.t === 'swirl') {
+          p.ang += p.va;
+          p.rad += p.vr;
+          p.x = p.cx + Math.cos(p.ang) * p.rad;
+          p.y = p.cy + Math.sin(p.ang) * p.rad * 0.7 - (140 - p.life) * 0.45;
+          g.fillStyle = p.c;
+          dot(p);
+        } else if (p.t === 'shoot') {
+          p.x += p.vx;
+          p.y += p.vy;
+          const gr = g.createLinearGradient(p.x, p.y, p.x - p.vx * 7, p.y - p.vy * 7);
+          gr.addColorStop(0, '#fff');
+          gr.addColorStop(1, 'rgba(255,255,255,0)');
+          g.strokeStyle = gr;
+          g.lineWidth = 3;
+          g.beginPath();
+          g.moveTo(p.x, p.y);
+          g.lineTo(p.x - p.vx * 7, p.y - p.vy * 7);
+          g.stroke();
+        } else if (p.t === 'bf') {
+          p.ph += 0.28;
+          p.x += Math.sin(p.ph * 0.3) * 1.5;
+          p.y += p.vy;
+          const f = Math.abs(Math.sin(p.ph));
+          g.fillStyle = p.c;
+          g.translate(p.x, p.y);
+          for (const s of [-1, 1]) {
+            g.beginPath();
+            g.ellipse(s * 7 * f, 0, 8 * f + 1, 11, s * 0.3, 0, 6.28);
+            g.fill();
+          }
+        } else if (p.t === 'smoke') {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.r += (p.maxR - p.r) * 0.04;
+          const gr = g.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r);
+          gr.addColorStop(0, `rgba(${p.c},0.45)`);
+          gr.addColorStop(0.6, `rgba(${p.c},0.2)`);
+          gr.addColorStop(1, `rgba(${p.c},0)`);
+          g.fillStyle = gr;
+          g.beginPath();
+          g.arc(p.x, p.y, p.r, 0, 6.28);
+          g.fill();
+        } else if (p.t === 'burstheart') {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.15;
+          drawHeart(g, p.x, p.y, 14 * p.scale, p.c, Math.min(1, p.life / 30));
+        } else {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.g) p.vy += p.g;
+          if (p.t === 'conf') {
+            p.rot += p.vr;
+            p.vx *= 0.99;
+            g.translate(p.x, p.y);
+            g.rotate(p.rot);
+            g.fillStyle = p.c;
+            g.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          } else {
+            g.fillStyle = p.c;
+            dot(p);
+          }
+        }
+        g.restore();
+      }
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(raf);
+      removeEventListener('fx', on);
+      removeEventListener('resize', rs);
+    };
+  }, []);
+
+  return <canvas ref={ref} className="fixed inset-0 z-10 pointer-events-none" />;
+}
+
+/* ---------- Vector Sceneries ---------- */
+const KASHMIR_FAR = "M0 560L160 430 290 500 470 330 630 470 790 380 960 490 1150 360 1300 470 1440 420V800H0Z";
+const KASHMIR_MID = "M0 620L200 520 350 580 560 470 760 590 980 510 1200 600 1440 540V800H0Z";
+const KASHMIR_CAPS = "M470 330L440 372 462 362 478 380 500 365ZM790 380L765 410 785 402 800 416 818 404ZM1150 360L1122 400 1142 392 1158 408 1180 394Z";
+
+const SC = {
+  gate: { id: 'g', sky: ['#a8c0d6', '#eaf2f8'], far: '#7b9bb7', mid: '#98b0c8', lake: '#dbe7f2' },
+  load: { id: 'd', sky: ['#0f172a', '#2c3e66'], far: '#1e2945', mid: '#141c33', lake: '#0c1224' },
+  '404': { id: 'd', sky: ['#0f172a', '#2c3e66'], far: '#1e2945', mid: '#141c33', lake: '#0c1224' },
+  seoul: { id: 's', sky: ['#120c24', '#3d1a45'], namsan: true },
+  c3: { id: 'c', sky: ['#1c100a', '#6f391a'], far: '#452314', mid: '#2d140a', lake: '#1a0b05', glow: 1 },
+  reasons: { id: 'rs', bg: 'linear-gradient(180deg, #180d21 0%, #3e1b34 50%, #17091a 100%)' },
+  coupons: { id: 'cp', bg: 'linear-gradient(180deg, #1f0d24 0%, #441738 50%, #200b21 100%)' },
+  c4: { id: 't', bg: 'linear-gradient(180deg, #380d24 0%, #7b2444 42%, #d89f83 100%)' },
+  c5: { id: 'n', sky: ['#040718', '#141c42'], far: '#111736', mid: '#0a0d24', lake: '#070a1c', boat: 1, sun: 1 }
+};
+
+function Scene({ p }) {
+  if (p.bg) return <div className="absolute inset-0" style={{ background: p.bg }} />;
+
+  const Shikara = ({ x, y, s }) => (
+    <g transform={`translate(${x} ${y}) scale(${s})`} fill="#03050c">
+      <path d="M0 0Q70 18 140 0L128-9H12Z" />
+      <path d="M34-9L46-30H104L116-9Z" />
+      <circle cx="75" cy="-17" r="4.5" fill="#ffb347" style={{ filter: 'drop-shadow(0 0 8px #ff9a1f)' }} />
+      <line x1="75" y1="-9" x2="75" y2="2" stroke="#ffb347" strokeWidth="1.5" />
+    </g>
+  );
+
+  return (
+    <div className="absolute inset-0" style={{ background: `linear-gradient(${p.sky[0]}, ${p.sky[1]})` }}>
+      {p.sun && (
+        <M.div
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(#ff8c42, #b8335b 55%, #301f5e)' }}
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 12, ease: 'easeInOut' }}
+        />
+      )}
+      {p.glow && (
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse at 50% 65%, rgba(247,183,51,0.32), transparent 65%)' }} />
+      )}
+
+      {p.namsan ? (
+        <svg className="absolute bottom-0 left-0 w-full h-[80%]" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+          <path d="M0 650 Q400 480 850 430 Q1200 480 1440 620 L1440 800 L0 800 Z" fill="#180e2b" />
+          <path d="M200 680 Q650 560 1100 540 Q1300 580 1440 690 L1440 800 L0 800 Z" fill="#0f071d" />
+          <g transform="translate(850, 230)" fill="#ff90b3">
+            <rect x="-4" y="0" width="8" height="200" fill="#2d1744" />
+            <rect x="-14" y="70" width="28" height="35" rx="5" fill="#e85d75" style={{ filter: 'drop-shadow(0 0 16px #ff758f)' }} />
+            <polygon points="-2,0 2,0 0,-70" fill="#ffe3ea" />
+            <circle cx="0" cy="-70" r="3" fill="#fff" style={{ filter: 'drop-shadow(0 0 8px #fff)' }} />
+          </g>
+          <path d="M50 720 Q120 700 180 725 L160 760 L70 760 Z" fill="#090412" />
+          <path d="M220 705 Q320 685 410 715 L390 760 L240 760 Z" fill="#090412" />
+          <path d="M1100 710 Q1200 690 1300 715 L1280 760 L1120 760 Z" fill="#090412" />
+        </svg>
+      ) : (
+        <svg className="absolute bottom-0 left-0 w-full h-[78%]" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice">
+          <clipPath id="lk"><rect y="640" width="1440" height="160" /></clipPath>
+          <path d={KASHMIR_FAR} fill={p.far} />
+          <path d={KASHMIR_MID} fill={p.mid} />
+          <path d={KASHMIR_CAPS} fill="#ffffff" opacity="0.85" />
+          <rect y="640" width="1440" height="160" fill={p.lake} />
+          <g clipPath="url(#lk)" opacity="0.32" transform="translate(0 1280) scale(1 -1)">
+            <path d={KASHMIR_FAR} fill={p.far} />
+          </g>
+          {p.boat && (
+            <M.g animate={{ x: [0, -70, 0] }} transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}>
+              <Shikara x={980} y={695} s={1} />
+              <Shikara x={310} y={680} s={0.65} />
+            </M.g>
+          )}
+        </svg>
+      )}
+
+      {p.id === 'g' && (
+        <div className="absolute inset-x-0 bottom-0 h-1/2" style={{ background: 'linear-gradient(transparent, rgba(255,255,255,0.75))' }} />
+      )}
+    </div>
+  );
+}
+
+/* ---------- Shared UI Elements ---------- */
+const Pg = ({ cls = '', exit, children }) => (
+  <M.div
+    initial={{ opacity: 0, y: 15 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={exit || { opacity: 0, y: -15 }}
+    transition={{ duration: 0.85, ease: 'easeOut' }}
+    className={'relative z-20 ' + cls}
+  >
+    {children}
+  </M.div>
+);
+
+const NavBtn = ({ onClick, children, icon = "✨" }) => (
+  <button
+    onClick={e => { sounds.playChime(); onClick && onClick(e); }}
+    className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-white tracking-wide shadow-2xl overflow-hidden glass-gold hover:scale-105 active:scale-95 transition-all duration-300"
+  >
+    <span className="absolute inset-0 bg-gradient-to-r from-amber-400/25 via-pink-400/25 to-amber-400/25 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    <span className="relative text-base md:text-lg flex items-center gap-2">
+      {children} <span className="text-xl">{icon}</span>
+    </span>
+  </button>
+);
+
+/* ---------- Chapter 1: The Time-Gate Screen ---------- */
+function Gate({ done }) {
+  const [t, setT] = useState(UNLOCK - Date.now());
+  useEffect(() => {
+    const i = setInterval(() => setT(UNLOCK - Date.now()), 1000);
+    return () => clearInterval(i);
+  }, []);
+  useEffect(() => { if (t <= 0) done(); }, [t <= 0]);
+
+  const s = Math.max(0, t / 1000 | 0);
+  const units = [
+    ['Days', s / 86400 | 0],
+    ['Hours', s / 3600 % 24 | 0],
+    ['Minutes', s / 60 % 60 | 0],
+    ['Seconds', s % 60]
+  ];
+
+  return (
+    <Pg cls="min-h-screen flex flex-col items-center justify-center text-center px-5 gap-6 text-[#1c334e]">
+      <div className="inline-block px-4 py-1.5 rounded-full bg-white/70 backdrop-blur border border-white/90 text-xs md:text-sm font-bold tracking-wider uppercase text-sky-950 shadow-md">
+        🔒 Top Secret Birthday Protocol
+      </div>
+      <h1 className="font-disp font-extrabold text-4xl md:text-6xl max-w-3xl leading-tight text-slate-900">
+        Hold up! It’s not November 2nd yet! No cheating, Huma. 😉
+      </h1>
+      <p className="font-serif italic text-xl md:text-3xl max-w-2xl text-slate-800 leading-relaxed">
+        Patience is a clinical virtue (even for the busiest dietitian in town!). Come back right at midnight when the magic begins. 🎂
+      </p>
+      <div className="flex gap-3 md:gap-5 mt-4">
+        {units.map(([label, val]) => (
+          <div key={label} className="rounded-2xl bg-white/75 backdrop-blur-md border border-white/95 px-3.5 py-4 w-20 md:w-28 shadow-xl">
+            <div className="font-disp font-extrabold text-3xl md:text-5xl tabular-nums text-slate-900">
+              {String(val).padStart(2, '0')}
+            </div>
+            <div className="text-[10px] md:text-xs font-bold tracking-widest uppercase opacity-80 text-slate-700 mt-1">
+              {label}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs md:text-sm font-medium text-slate-600 mt-2">
+        Strictly locked until the birthday girl’s special hour ✨
+      </p>
+    </Pg>
+  );
+}
+
+/* ---------- Chapter 2: The Loading & 404 Prank ---------- */
+function Load({ done }) {
+  const [p, setP] = useState(0);
+  useEffect(() => {
+    const t0 = performance.now();
+    let r, to;
+    const f = t => {
+      const k = Math.min(1, (t - t0) / 3200);
+      setP(k * 100 | 0);
+      k < 1 ? r = requestAnimationFrame(f) : to = setTimeout(done, 400);
+    };
+    r = requestAnimationFrame(f);
+    return () => { cancelAnimationFrame(r); clearTimeout(to); };
+  }, []);
+
+  return (
+    <Pg cls="min-h-screen flex flex-col items-center justify-center gap-6 px-6 text-center">
+      <div className="w-16 h-16 rounded-full border-4 border-amber-300/30 border-t-amber-300 animate-spin mb-2" />
+      <p className="font-serif italic text-2xl md:text-4xl text-amber-100">
+        Loading Huma’s Birthday Universe…
+      </p>
+      <div className="w-80 max-w-full h-2.5 rounded-full bg-white/10 overflow-hidden p-0.5 border border-white/20">
+        <div
+          className="h-full rounded-full transition-all duration-150"
+          style={{ width: p + '%', background: 'linear-gradient(90deg, #ff758f, #f7b733, #ffd873)' }}
+        />
+      </div>
+      <span className="text-sm font-mono tracking-widest text-amber-200/80">{p}%</span>
+    </Pg>
+  );
+}
+
+function E404({ go }) {
+  return (
+    <Pg exit={{ opacity: 0, scale: 1.4, filter: 'blur(20px)' }} cls="min-h-screen flex flex-col items-center justify-center gap-6 px-6 text-center">
+      <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-red-500/20 border border-red-500/40 text-red-200 text-xs tracking-wider uppercase">
+        ⚠️ Unexpected Error
+      </div>
+      <M.h1
+        animate={{ x: [0, -4, 4, -4, 0] }}
+        transition={{ repeat: Infinity, duration: 0.35, repeatDelay: 2.2 }}
+        className="font-disp font-extrabold text-5xl md:text-7xl text-rose-100"
+      >
+        404 - Surprise Not Found
+      </M.h1>
+      <p className="font-serif italic text-xl md:text-3xl opacity-90 max-w-xl text-rose-200 leading-relaxed">
+        Wait, what? Did your surprise get lost in the Gulmarg snowdrifts and catch a flight to Seoul without us?!
+      </p>
+      <NavBtn onClick={go} icon="🎉">
+        Refresh &amp; Find It
+      </NavBtn>
+    </Pg>
+  );
+}
+
+/* ---------- Chapter 2.5: Seoul Winter & K-Drama Love Lock ---------- */
+function SeoulScene({ next }) {
+  const [locked, setLocked] = useState(false);
+  const [activePrompt, setActivePrompt] = useState(0);
+
+  const kdramaPrompts = [
+    { title: "The Goblin Winter Vibe ⚔️", text: "If this were a K-Drama, snow would start falling in slow motion right now while the Goblin OST plays, and I’d be holding an umbrella over you trying to look mysterious." },
+    { title: "The Late-Night Drama Deal 📺", text: "I promise never to ask 'Who is this guy again?' during episode 14 of your favorite show, and I will always fetch your chai and snacks on cue." },
+    { title: "The Eternal Love Promise 🫰", text: "No matter how busy clinic days get or how chaotic the world feels, coming home to you is my absolute favorite place on earth." }
+  ];
+
+  const handleLock = () => {
+    if (!locked) {
+      setLocked(true);
+      sounds.playChime();
+      fx('heartburst', innerWidth / 2, innerHeight / 2);
+    }
+  };
+
+  return (
+    <Pg cls="min-h-screen flex flex-col items-center justify-between text-center px-5 py-12">
+      <div className="max-w-3xl">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-pink-500/25 border border-pink-500/50 text-pink-200 text-xs tracking-widest uppercase mb-4 shadow-lg">
+          ❄️ Episode 1: Winter in Seoul, South Korea
+        </div>
+        <h2 className="font-kr font-bold text-3xl md:text-5xl text-pink-100 leading-snug">
+          생일 축하해요, Huma! 🫰
+        </h2>
+        <p className="font-serif italic text-xl md:text-2xl text-pink-200/90 mt-2">
+          "Like the first snowfall over Namsan Tower, you make everything in life feel softer, brighter, and magical."
+        </p>
+      </div>
+
+      {/* Interactive K-Drama Note Flip */}
+      <div className="w-full max-w-lg my-6">
+        <div className="flex gap-2 justify-center mb-3">
+          {kdramaPrompts.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { sounds.playChime(); setActivePrompt(i); }}
+              className={`h-2.5 rounded-full transition-all duration-300 ${activePrompt === i ? 'w-8 bg-amber-300' : 'w-2.5 bg-white/30'}`}
+            />
+          ))}
+        </div>
+        <div className="glass-gold p-6 rounded-3xl text-left border border-amber-300/40 shadow-2xl relative">
+          <div className="text-xs uppercase font-bold tracking-wider text-pink-300 mb-1 font-mono">
+            {kdramaPrompts[activePrompt].title}
+          </div>
+          <p className="font-serif italic text-lg md:text-xl text-amber-100 leading-relaxed">
+            "{kdramaPrompts[activePrompt].text}"
+          </p>
+          <div className="mt-3 text-right">
+            <button
+              onClick={() => { sounds.playChime(); setActivePrompt((activePrompt + 1) % kdramaPrompts.length); }}
+              className="text-xs text-amber-200 underline font-semibold hover:text-white"
+            >
+              Next Cute Thought →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Interactive Namsan Love Lock Box */}
+      <div className="w-full max-w-md p-6 rounded-3xl glass shadow-2xl relative overflow-hidden border border-pink-400/40 mb-6">
+        <div className="text-4xl mb-2">{locked ? '🔒' : '🔓'}</div>
+        <h3 className="font-disp font-bold text-2xl text-amber-200">
+          Namsan Tower Love Lock
+        </h3>
+        <p className="text-xs md:text-sm text-pink-100/80 mt-1 mb-4">
+          {locked ? "Locked forever in Seoul! Sealed with all my heart. 💕" : "Tap the padlock below to permanently lock our love at Namsan Tower:"}
+        </p>
+
+        <div
+          onClick={handleLock}
+          className={`cursor-pointer transition-all duration-500 transform ${locked ? 'scale-105' : 'hover:scale-102 active:scale-95'} rounded-2xl p-5 border ${locked ? 'bg-gradient-to-r from-pink-600/50 to-rose-600/50 border-pink-300 shadow-xl' : 'bg-white/10 border-white/20'}`}
+        >
+          <div className="font-hand text-3xl md:text-4xl text-amber-200">
+            Huma &amp; Her Loving Husband
+          </div>
+          <div className="text-xs tracking-wider text-pink-200 mt-2 font-mono font-semibold">
+            {locked ? "Seoul Love Promise • Forever Locked 🫰✨" : "👉 Tap Here To Lock Our Padlock"}
+          </div>
+        </div>
+      </div>
+
+      <NavBtn onClick={next} icon="🏔️">
+        Travel to Kashmir &amp; Memories
+      </NavBtn>
+    </Pg>
+  );
+}
+
+/* ---------- Chapter 3: Kashmir, Memory Lane & Deeply Human Letter ---------- */
+const QS = [
+  'Today is completely, unapologetically all about celebrating you.',
+  'Wishing you endless laughter, cozy warmth, and zero diet calculations.',
+  'Here’s to another magnificent year of having you by my side.'
+];
+
+const MEMORIES = [
+  {
+    title: 'Our Spontaneous Laughs 💖',
+    subtitle: 'That moment when everything is hilarious for no reason',
+    story: 'No matter how tired we both are, one look from you can turn the most ordinary Tuesday evening into a fit of unstoppable giggles. That laughter is my absolute favorite sound in the world.'
+  },
+  {
+    title: 'Adventures & Chilly Evenings 🏔️',
+    subtitle: 'From warm cups of chai to dreaming of snowy Gulmarg',
+    story: 'You always complain your hands are freezing cold, and then proceed to use my neck as a personal hand warmer! I wouldn’t trade that for anything in the world.'
+  },
+  {
+    title: 'The Clinic Grind & Dedication 🩺',
+    subtitle: 'Watching you change lives as a dietitian',
+    story: 'I watch you care for every single client with so much heart, clinical precision, and empathy. The way your face lights up when someone reaches their health milestone proves just how brilliant and kind you are.'
+  },
+  {
+    title: 'Late Night Cozy Marathons 📺',
+    subtitle: 'Drama binges, chai & unspoken comfort',
+    story: 'Curled under the blanket, binging our favorite serials with your head on my shoulder. Those quiet, uncomplicated hours with you are the happiest moments of my life.'
+  }
+];
+
+function MemoryCard({ mem, idx }) {
+  const [flipped, setFlipped] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
+  const colors = [
+    'from-amber-600/40 to-rose-700/40',
+    'from-purple-600/40 to-pink-700/40',
+    'from-emerald-600/40 to-teal-800/40',
+    'from-rose-600/40 to-amber-700/40'
+  ];
+
+  return (
+    <div
+      onClick={() => { sounds.playChime(); setFlipped(!flipped); }}
+      className="cursor-pointer glass snap-center shrink-0 w-80 md:w-96 rounded-3xl p-5 shadow-2xl transition-all duration-300 hover:scale-102 border border-amber-300/30 text-left relative flex flex-col justify-between"
+      style={{ minHeight: '380px' }}
+    >
+      {!flipped ? (
+        <>
+          <div className="relative rounded-2xl overflow-hidden h-52 w-full bg-slate-800/60 flex items-center justify-center">
+            {!imgError ? (
+              <img
+                src={`./photo${idx + 1}.jpg`}
+                onError={() => setImgError(true)}
+                className="h-full w-full object-cover"
+                alt=""
+              />
+            ) : (
+              <div className={`h-full w-full bg-gradient-to-br ${colors[idx % 4]} flex flex-col items-center justify-center p-4 text-center`}>
+                <span className="text-4xl mb-1">📸</span>
+                <span className="font-disp font-bold text-lg text-amber-100">{mem.title}</span>
+                <span className="text-[11px] text-white/60 mt-1 font-mono">./photo{idx + 1}.jpg</span>
+              </div>
+            )}
+            <div className="absolute top-3 right-3 bg-slate-900/70 backdrop-blur px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-amber-200">
+              Tap To Read Story 📖
+            </div>
+          </div>
+          <div className="pt-4">
+            <h3 className="font-disp font-bold text-xl text-amber-100">{mem.title}</h3>
+            <p className="text-xs text-pink-200/80 mt-1 italic font-serif">{mem.subtitle}</p>
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col justify-between h-full py-2">
+          <div>
+            <div className="flex justify-between items-center border-b border-amber-300/30 pb-2 mb-3">
+              <span className="text-xs uppercase font-bold tracking-wider text-amber-300 font-mono">Memory #{idx + 1}</span>
+              <span className="text-xs text-white/60">Tap to flip back</span>
+            </div>
+            <h4 className="font-disp font-bold text-xl text-amber-200 mb-2">{mem.title}</h4>
+            <p className="font-serif italic text-base md:text-lg text-amber-50 leading-relaxed">
+              "{mem.story}"
+            </p>
+          </div>
+          <div className="text-xs text-pink-300 font-semibold pt-3 text-right">
+            Always remembered with love ❤️
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+const LETTER_TEXTS = [
+  "My Dearest Huma, ❤️",
+  "Happy 30th Birthday, my love! 🎂✨ Sitting down to write this, so many memories rushed through my mind—our countless conversations, our quiet moments, the dreams we talk about late at night, and how naturally you've become the heartbeat of my everyday life.",
+  "I see how relentlessly you pour your energy into your practice as a clinical dietitian. You take care of everyone who walks through your door, guiding them with so much patience, empathy, and wisdom. But today, the clinic doors are strictly shut, client files are locked away, and there is an official ban on counting a single calorie or macro! Today belongs 100% to you, and you deserve to be spoiled rotten.",
+  "Thank you for being my anchor, my constant cheerleader, my favorite travel buddy in our dreams of Kashmir and Seoul, and the only person who can make me smile even on the most exhausting days. Thank you for your warm hugs, your infectious laughter, and even those freezing cold hands you love placing on my warm neck in winter! ❄️",
+  "As you step into this beautiful milestone year, my only prayer is that your days are filled with effortless peace, boundless health, great food, exciting adventures, and all the quiet joy your tender heart deserves.",
+  "I love you more deeply with each passing day. Happy Birthday, my beautiful wife! ❤️🎉",
+  "Forever & always yours,\nYour Loving Husband"
+];
+
+function DeepLetter() {
+  const ref = useRef();
+  const v = useInView(ref, { once: true, amount: 0.15 });
+
+  return (
+    <M.div
+      ref={ref}
+      initial={{ clipPath: 'inset(0 0 100% 0)' }}
+      animate={v ? { clipPath: 'inset(0 0 0% 0)' } : {}}
+      transition={{ duration: 1.8, ease: 'easeInOut' }}
+      className="parch max-w-3xl mx-auto rounded-3xl p-7 md:p-14 text-[#381a0b] shadow-2xl relative border-2 border-[#d4a359]/70"
+    >
+      <div className="absolute top-5 right-5 stamp-seal w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white text-2xl select-none">
+        ♥
+      </div>
+      <div className="font-hand text-2xl md:text-3xl leading-relaxed space-y-5">
+        {LETTER_TEXTS.map((p, idx) => (
+          <p key={idx} className={idx === 0 ? "font-bold text-3xl md:text-4xl text-[#240e04]" : (idx === LETTER_TEXTS.length - 1 ? "font-bold text-2xl md:text-3xl text-[#240e04] pt-2 whitespace-pre-line" : "")}>
+            {p}
+          </p>
+        ))}
+      </div>
+    </M.div>
+  );
+}
+
+function C3({ next }) {
+  const [q, setQ] = useState(0);
+  useEffect(() => {
+    const i = setInterval(() => setQ(x => (x + 1) % 3), 4200);
+    return () => clearInterval(i);
+  }, []);
+
+  let k = 0;
+
+  return (
+    <Pg cls="pb-24">
+      {/* Hero Headline */}
+      <section className="min-h-screen flex flex-col items-center justify-center text-center px-6">
+        <h1
+          onClick={e => fx('confetti', e.clientX, e.clientY)}
+          className="font-disp font-black text-5xl md:text-8xl cursor-pointer select-none leading-tight"
+          style={{ color: '#ffe4a0', textShadow: '0 0 35px rgba(247,183,51,0.65)' }}
+        >
+          {['Happy', 'Birthday,', 'Huma'].map(w => (
+            <span key={w} className="inline-block mr-3 md:mr-5">
+              {[...w].map(c => (
+                <M.span
+                  key={k}
+                  className="inline-block"
+                  initial={{ opacity: 0, y: 35, filter: 'blur(10px)' }}
+                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ delay: 0.6 + 0.06 * k++, duration: 0.6 }}
+                >
+                  {c}
+                </M.span>
+              ))}
+            </span>
+          ))}
+          <M.span
+            className="inline-block"
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ repeat: Infinity, duration: 1.3 }}
+          >
+            ❤️
+          </M.span>
+        </h1>
+
+        <div className="h-24 mt-8 max-w-2xl px-4 flex items-center justify-center">
+          <AP mode="wait">
+            <M.p
+              key={q}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.9 }}
+              className="font-serif italic text-2xl md:text-4xl text-amber-100 leading-snug"
+            >
+              {QS[q]}
+            </M.p>
+          </AP>
+        </div>
+
+        <div className="mt-8 text-xs tracking-widest text-amber-200/70 uppercase font-mono">
+          (Tap anywhere for golden sparkles • Scroll down to unfold your stories)
+        </div>
+        <M.span animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 1.8 }} className="mt-4 text-2xl opacity-75">
+          ↓
+        </M.span>
+      </section>
+
+      {/* Memory Gallery */}
+      <section className="py-16">
+        <div className="text-center mb-8 px-4">
+          <div className="inline-block px-4 py-1 rounded-full bg-amber-400/15 border border-amber-400/30 text-amber-200 text-xs tracking-widest uppercase mb-2">
+            📸 Interactive Memory Gallery
+          </div>
+          <h2 className="font-disp font-bold text-3xl md:text-5xl text-amber-100">
+            Moments That Live In My Heart
+          </h2>
+          <p className="font-serif italic text-lg text-amber-200/70 mt-1">
+            Tap on any memory card to read the sweet story behind it:
+          </p>
+        </div>
+
+        <div className="noscroll flex gap-6 overflow-x-auto snap-x snap-mandatory px-8 md:px-[20vw] pb-8">
+          {MEMORIES.map((mem, i) => (
+            <MemoryCard key={i} mem={mem} idx={i} />
+          ))}
+        </div>
+      </section>
+
+      {/* The Letter */}
+      <section className="px-5 py-16">
+        <div className="text-center mb-6">
+          <span className="text-xs uppercase tracking-widest text-amber-300 bg-amber-400/10 px-4 py-1.5 rounded-full border border-amber-400/30 font-mono">
+            ✉️ A Letter From My Soul
+          </span>
+        </div>
+        <DeepLetter />
+      </section>
+
+      <div className="text-center mt-6">
+        <NavBtn onClick={next} icon="💌">
+          Read: 10 Little Things I Adore About You
+        </NavBtn>
+      </div>
+    </Pg>
+  );
+}
+
+/* ---------- Chapter 3.2: 10 Little Reasons / Husband Notes ---------- */
+const REASONS = [
+  { num: 1, title: "Your Passion for Healing", desc: "The genuine warmth and scientific care you bring to your dietetics practice. You truly change people's lives for the better." },
+  { num: 2, title: "The Dramatic Serial Reactions", desc: "How you gasps, pause the show, and give me a full 10-minute character analysis whenever a drama plot twist drops." },
+  { num: 3, title: "Your Cute Cold Hands", desc: "How you always complain of being freezing, and immediately sneak your hands under my jacket or onto my neck." },
+  { num: 4, title: "The 'Just One Bite' Rule", desc: "Whenever I order food and you claim you're not hungry... only for 40% of my fries and dessert to magically disappear!" },
+  { num: 5, title: "Your Radiant Smile", desc: "The way your entire face lights up when you see baby animals, good food, or a heartfelt surprise." },
+  { num: 6, title: "Your Resilience & Drive", desc: "You are one of the most hardworking, determined women I know. Watching you build your professional world inspires me every day." },
+  { num: 7, title: "The Way You Care for Family", desc: "Your boundless kindness and thoughtfulness towards both our families. You knit everyone together with so much love." },
+  { num: 8, title: "Our Inside Jokes", desc: "How we can exchange one single look in a crowded room and instantly burst into quiet laughter without saying a single word." },
+  { num: 9, title: "Your Cozy Aesthetic", desc: "Your love for cozy winter sweaters, scenic photography, fairy lights, and dreams of snow-covered peaks." },
+  { num: 10, title: "You Are My Home", desc: "No matter how hectic or loud life gets, resting my head next to you at the end of the day makes everything make sense." }
+];
+
+function ReasonsScene({ next }) {
+  const [openedIdx, setOpenedIdx] = useState(null);
+
+  const toggleReason = idx => {
+    sounds.playChime();
+    setOpenedIdx(openedIdx === idx ? null : idx);
+    fx('heartburst', innerWidth / 2, innerHeight / 2);
+  };
+
+  return (
+    <Pg cls="min-h-screen px-4 py-16 flex flex-col items-center justify-between text-center gap-8">
+      <div className="max-w-2xl">
+        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-pink-500/20 border border-pink-500/40 text-pink-200 text-xs tracking-widest uppercase mb-3 font-mono">
+          💖 The Little Things That Matter
+        </div>
+        <h2 className="font-disp font-bold text-4xl md:text-6xl text-amber-100">
+          10 Little Things I Love About You
+        </h2>
+        <p className="font-serif italic text-xl text-pink-200/80 mt-1">
+          Tap each card to open a note written just for you:
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 max-w-4xl w-full my-4">
+        {REASONS.map((r, i) => {
+          const isOpen = openedIdx === i;
+          return (
+            <div
+              key={r.num}
+              onClick={() => toggleReason(i)}
+              className={`cursor-pointer text-left p-5 rounded-2xl glass transition-all duration-300 border ${isOpen ? 'border-amber-300 bg-amber-950/40 shadow-2xl scale-102' : 'border-white/15 hover:border-amber-200/40'}`}
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs font-bold text-amber-300 uppercase">
+                  Reason #{r.num}
+                </span>
+                <span className="text-sm">{isOpen ? '💖' : '💌'}</span>
+              </div>
+              <h4 className="font-disp font-bold text-xl text-amber-100 mt-2">
+                {r.title}
+              </h4>
+              {isOpen ? (
+                <M.p initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className="font-serif italic text-base md:text-lg text-pink-100 mt-2 leading-relaxed">
+                  "{r.desc}"
+                </M.p>
+              ) : (
+                <p className="text-xs text-amber-200/60 mt-1.5 font-mono">
+                  👉 Tap to reveal note...
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <NavBtn onClick={next} icon="🎁">
+        Unlock Your Birthday Gift Box &amp; Vouchers
+      </NavBtn>
+    </Pg>
+  );
+}
+
+/* ---------- Chapter 3.5: Interactive 3D Gift Box & Love Vouchers ---------- */
+const COUPONS = [
+  {
+    icon: '🍿',
+    title: 'The Drama Marathon Pass',
+    desc: '1x Full Night marathon of any K-Drama or Pakistani Serial of your choice! Zero commentary from me, and I supply hot tea, popcorn, and chocolate on demand.'
+  },
+  {
+    icon: '💆‍♀️',
+    title: 'Chief Relaxation Order',
+    desc: '1x Unlimited head, neck & shoulder massage after a strenuous clinic day. Valid anytime you utter the words "I am exhausted."'
+  },
+  {
+    icon: '🍳',
+    title: 'Master Chef Exemption',
+    desc: 'You decide nothing, cook nothing, and clean nothing today. Breakfast, dinner & midnight snacks handled 100% by your personal husband concierge.'
+  },
+  {
+    icon: '✈️',
+    title: 'Kashmir & Seoul Travel Voucher',
+    desc: 'Guaranteed future vacation where we ride Shikaras in Dal Lake, drink warm Kahwa in Gulmarg, and eat street food under the Seoul winter sky.'
+  }
+];
+
+function CouponsScene({ next }) {
+  const [opened, setOpened] = useState(false);
+  const [claimed, setClaimed] = useState({});
+
+  const handleOpen = () => {
+    if (!opened) {
+      setOpened(true);
+      sounds.playTada();
+      fx('confetti', innerWidth / 2, innerHeight / 2);
+    }
+  };
+
+  const toggleClaim = idx => {
+    sounds.playChime();
+    setClaimed(prev => ({ ...prev, [idx]: !prev[idx] }));
+    fx('heartburst', innerWidth / 2, innerHeight / 2);
+  };
+
+  return (
+    <Pg cls="min-h-screen px-4 py-14 flex flex-col items-center justify-between text-center gap-8">
+      <div>
+        <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-purple-500/20 border border-purple-500/40 text-purple-200 text-xs tracking-widest uppercase mb-3 font-mono">
+          🎁 Special Delivery For Huma
+        </div>
+        <h2 className="font-disp font-bold text-4xl md:text-6xl text-amber-100">
+          Birthday Rewards &amp; Vouchers
+        </h2>
+        <p className="font-serif italic text-xl text-purple-200/80 mt-1">
+          {opened ? "Tap any coupon below to redeem your lifetime husband perks:" : "Tap the royal gift box below to untie the ribbon and claim your gifts:"}
+        </p>
+      </div>
+
+      {!opened ? (
+        <M.div
+          onClick={handleOpen}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="cursor-pointer my-8 p-10 rounded-3xl glass-gold shadow-2xl flex flex-col items-center justify-center max-w-sm w-full border-2 border-amber-300/40 group"
+        >
+          <div className="text-7xl md:text-8xl mb-4 group-hover:rotate-12 transition-transform duration-300">
+            🎁
+          </div>
+          <span className="font-disp font-bold text-2xl text-amber-200">
+            Tap To Open Surprise
+          </span>
+          <span className="text-xs text-amber-300/70 mt-2 font-mono">
+            ★ Sealed with 100% Love &amp; Goblin Magic ★
+          </span>
+        </M.div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full my-4">
+          {COUPONS.map((c, idx) => {
+            const isDone = claimed[idx];
+            return (
+              <M.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: idx * 0.15 }}
+                onClick={() => toggleClaim(idx)}
+                className={`cursor-pointer text-left p-5 rounded-2xl glass-gold transition-all duration-300 relative border ${isDone ? 'border-emerald-400 bg-emerald-950/40 shadow-xl' : 'border-amber-300/30 hover:border-amber-300'}`}
+              >
+                <div className="flex items-start justify-between">
+                  <span className="text-3xl">{c.icon}</span>
+                  <span className={`text-xs px-2.5 py-1 rounded-full font-bold uppercase tracking-wider ${isDone ? 'bg-emerald-400 text-slate-900' : 'bg-amber-300/20 text-amber-200'}`}>
+                    {isDone ? '✓ Claimed & Active' : 'Tap To Claim'}
+                  </span>
+                </div>
+                <h4 className="font-disp font-bold text-xl text-amber-100 mt-3">{c.title}</h4>
+                <p className="text-sm text-pink-100/90 mt-1.5 leading-relaxed">{c.desc}</p>
+              </M.div>
+            );
+          })}
+        </div>
+      )}
+
+      <NavBtn onClick={next} icon="🍰">
+        Proceed To The Dietitian’s Feast
+      </NavBtn>
+    </Pg>
+  );
+}
+
+/* ---------- Chapter 4: The Dietitian’s Feast & Candle Blowout ---------- */
+const NUT = [['Joy', '100% Daily Value'], ['Stress', '0g'], ['Love', 'Infinite']];
+
+const Dish = ({ id, name, tip, setTip, onClick, onDoubleClick, children }) => (
+  <div
+    className="relative cursor-pointer"
+    onMouseEnter={() => setTip(id)}
+    onMouseLeave={() => setTip(null)}
+    onClick={e => { setTip(id); onClick && onClick(e); }}
+    onDoubleClick={onDoubleClick}
+  >
+    <AP>
+      {tip === id && (
+        <M.div
+          initial={{ opacity: 0, y: 8, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0 }}
+          className="absolute z-30 left-1/2 -translate-x-1/2 -top-24 w-52 rounded-xl bg-[#fff8ee] text-[#5b1a33] shadow-2xl p-3 text-xs text-left border border-amber-200"
+        >
+          <b className="block font-disp text-sm border-b border-[#5b1a33]/20 pb-1 mb-1.5">
+            {name}: Nutrition Facts
+          </b>
+          {NUT.map(([a, b]) => (
+            <div key={a} className="flex justify-between py-0.5">
+              <span>{a}</span>
+              <b>{b}</b>
+            </div>
+          ))}
+        </M.div>
+      )}
+    </AP>
+    {children}
+  </div>
+);
+
+function C4({ next }) {
+  const [lit, setLit] = useState(true);
+  const [cut, setCut] = useState(false);
+  const [tip, setTip] = useState(null);
+  const [stamped, setStamped] = useState(false);
+  const cr = useRef();
+
+  useEffect(() => {
+    let lastX, lastY, lastZ;
+    const handleMotion = e => {
+      const acc = e.accelerationIncludingGravity;
+      if (!acc) return;
+      if (lastX !== undefined) {
+        const delta = Math.abs(acc.x - lastX) + Math.abs(acc.y - lastY) + Math.abs(acc.z - lastZ);
+        if (delta > 22 && lit) {
+          blow();
+        }
+      }
+      lastX = acc.x; lastY = acc.y; lastZ = acc.z;
+    };
+    window.addEventListener('devicemotion', handleMotion);
+    return () => window.removeEventListener('devicemotion', handleMotion);
+  }, [lit]);
+
+  const blow = e => {
+    if (e) e.stopPropagation();
+    if (!lit) return;
+    setLit(false);
+    const b = cr.current ? cr.current.getBoundingClientRect() : { x: innerWidth / 2, y: innerHeight / 2, width: 0 };
+    const x = b.x + b.width / 2;
+    fx('smoke', x, b.y + 10);
+    fx('confetti', x, b.y);
+  };
+
+  const handleCut = () => {
+    if (!cut) {
+      setCut(true);
+      sounds.playTada();
+      fx('confetti', innerWidth / 2, innerHeight / 2);
+    }
+  };
+
+  const T = { tip, setTip };
+
+  return (
+    <Pg cls="min-h-screen px-4 py-12 flex flex-col items-center text-center gap-8">
+      <div>
+        <h2 className="font-disp font-bold text-4xl md:text-6xl text-amber-100">
+          The Dietitian’s Grand Feast
+        </h2>
+        <p className="font-serif italic text-xl md:text-3xl text-rose-100 mt-1">
+          {lit ? 'Blow the candles (Tap them or shake your phone!) 🕯️' : (cut ? 'A royal slice for the birthday girl 🍰' : 'Now tap the cake to make the first cut!')}
+        </p>
+      </div>
+
+      <div
+        className="w-full max-w-5xl rounded-[2.5rem] p-6 md:p-10 pt-20 grid md:grid-cols-3 gap-8 items-end justify-items-center"
+        style={{
+          background: 'repeating-linear-gradient(90deg,rgba(0,0,0,.08) 0 2px,transparent 2px 90px), linear-gradient(#96592d, #6e3a1c)',
+          boxShadow: '0 30px 70px rgba(30, 8, 16, 0.65)',
+          border: '1px solid rgba(255,255,255,0.15)'
+        }}
+      >
+        {/* Winter Fruit Tart */}
+        <Dish id="tart" name="Winter Fruit Tart" {...T}>
+          <svg viewBox="0 0 160 120" className="w-44 drop-shadow-xl">
+            <ellipse cx="80" cy="100" rx="75" ry="12" fill="#f5e6d3" />
+            <ellipse cx="80" cy="78" rx="58" ry="22" fill="#c98a4b" />
+            <ellipse cx="80" cy="72" rx="52" ry="18" fill="#fff1d6" />
+            {[[55, 70, '#d6264b'], [105, 70, '#d6264b'], [80, 64, '#d6264b'], [68, 76, '#8cc63f'], [94, 76, '#8cc63f'], [80, 74, '#ff9a2e'], [60, 64, '#3b3a8a'], [100, 64, '#3b3a8a']].map(([x, y, c], i) => (
+              <circle key={i} cx={x} cy={y} r="7" fill={c} />
+            ))}
+            <path d="M76 58q4-12 12-6-4 8-12 6Z" fill="#3f9a4a" />
+          </svg>
+          <span className="block text-xs font-semibold text-amber-200 mt-2 font-mono">Winter Fruit Tart</span>
+        </Dish>
+
+        {/* Central Birthday Cake */}
+        <div className="flex flex-col items-center gap-3">
+          <Dish id="cake" name="Birthday Cake" {...T} onClick={handleCut} onDoubleClick={() => fx('fire')}>
+            <svg viewBox="0 0 240 230" className="w-64 md:w-72 drop-shadow-2xl">
+              <ellipse cx="120" cy="205" rx="115" ry="18" fill="#f5e6d3" />
+              <rect x="25" y="150" width="190" height="52" rx="12" fill="#7d2146" />
+              <rect x="48" y="104" width="144" height="50" rx="12" fill="#b83a64" />
+              <rect x="70" y="64" width="100" height="44" rx="12" fill="#f6d9c8" />
+              <path d="M25 160q15 18 30 0t30 0 30 0 30 0 30 0 30 0 30 0" fill="none" stroke="#fff6ea" strokeWidth="10" strokeLinecap="round" />
+              <path d="M48 114q12 14 24 0t24 0 24 0 24 0 24 0 24 0" fill="none" stroke="#fff6ea" strokeWidth="8" strokeLinecap="round" />
+              <ellipse cx="120" cy="66" rx="50" ry="8" fill="#fff6ea" />
+              {[[88, 60], [152, 60]].map(([x, y]) => (
+                <circle key={x} cx={x} cy={y} r="7" fill="#e0283e" />
+              ))}
+              <circle cx="120" cy="68" r="5" fill="#3b3a8a" />
+              
+              {/* Candles */}
+              <g ref={cr} onClick={blow} className="cursor-pointer">
+                {[100, 120, 140].map((x, i) => (
+                  <g key={x}>
+                    <rect x={x - 3} y="32" width="6" height="32" rx="2" fill={['#ffd873', '#ff9db5', '#9ad4ff'][i]} />
+                    {lit && (
+                      <ellipse className="flame" cx={x} cy="24" rx="4.5" ry="9" fill="#ffb02e" />
+                    )}
+                  </g>
+                ))}
+                <rect x="90" y="5" width="60" height="60" fill="transparent" />
+              </g>
+            </svg>
+          </Dish>
+          <span className="text-xs text-amber-200/80 font-mono">
+            {lit ? "👉 Tap candles to blow out" : "👉 Tap cake to slice"}
+          </span>
+
+          {/* Sliced Cake Reward */}
+          <AP>
+            {cut && (
+              <M.div
+                initial={{ y: -40, opacity: 0, scale: 0.7 }}
+                animate={{ y: 0, opacity: 1, scale: 1 }}
+                transition={{ type: 'spring', damping: 12 }}
+                className="flex flex-col items-center mt-2"
+              >
+                <svg viewBox="0 0 120 90" className="w-36 drop-shadow-lg">
+                  <ellipse cx="60" cy="68" rx="55" ry="14" fill="#fff" />
+                  <path d="M25 48L95 38V46L25 56Z" fill="#f6d9c8" />
+                  <path d="M25 56L95 46V54L25 64Z" fill="#b83a64" />
+                  <path d="M25 64L95 54V62L25 72Z" fill="#7d2146" />
+                  <path d="M25 48L95 38L110 44L40 54Z" fill="#fff6ea" />
+                </svg>
+                <p className="font-serif italic text-xl text-amber-100 max-w-xs mt-1">
+                  ✨ May all your wishes come true! You get the royal first slice 🍰
+                </p>
+              </M.div>
+            )}
+          </AP>
+        </div>
+
+        {/* Healthy Layered Parfait */}
+        <Dish id="parfait" name="Healthy Berry Parfait" {...T}>
+          <svg viewBox="0 0 100 150" className="w-32 drop-shadow-xl">
+            <clipPath id="gl"><path d="M15 20L85 20L72 130Q50 140 28 130Z" /></clipPath>
+            <g clipPath="url(#gl)">
+              <rect y="100" width="100" height="45" fill="#9b1d4a" />
+              <rect y="78" width="100" height="22" fill="#fff3e2" />
+              <rect y="58" width="100" height="20" fill="#d94f7a" />
+              <rect y="40" width="100" height="18" fill="#fff3e2" />
+              <rect y="20" width="100" height="20" fill="#e7b46a" />
+            </g>
+            <path d="M15 20L85 20L72 130Q50 140 28 130Z" fill="rgba(255,255,255,0.2)" stroke="#fff" strokeWidth="2" />
+            <circle cx="40" cy="16" r="8" fill="#e0283e" />
+            <circle cx="60" cy="14" r="7" fill="#3b3a8a" />
+            <path d="M48 10q6-10 14-4-4 8-14 4Z" fill="#3f9a4a" />
+          </svg>
+          <span className="block text-xs font-semibold text-amber-200 mt-2 font-mono">Organic Layered Parfait</span>
+        </Dish>
+
+        {/* Clinical Exemption Pad */}
+        <div
+          onClick={() => { sounds.playChime(); setStamped(true); fx('heartburst', innerWidth / 2, innerHeight / 2); }}
+          className="cursor-pointer relative md:col-span-3 max-w-lg w-full rounded-2xl bg-[#fff8eb] text-[#5b1a33] p-6 text-left shadow-2xl transition-transform hover:scale-102"
+          style={{ border: '2px dashed #c9983a' }}
+        >
+          <div className="absolute -top-4 -right-4 stamp-seal w-14 h-14 rounded-full grid place-items-center text-2xl text-red-100 shadow-xl">
+            {stamped ? '✓' : '♥'}
+          </div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="font-bold tracking-wider text-xs uppercase text-amber-800">
+              Rx Official Prescription
+            </span>
+            <span className="text-xs bg-red-100 text-red-800 px-2 py-0.5 rounded font-mono font-bold">
+              {stamped ? 'STAMPED & APPROVED' : 'TAP TO STAMP'}
+            </span>
+          </div>
+          <h3 className="font-disp font-bold text-xl mb-1 text-[#4a1228]">
+            Clinical Exemption Certificate
+          </h3>
+          <p className="font-serif text-xl italic leading-snug text-[#4a1228]/90">
+            "Official Clinical Order: Today, all calories are converted directly into pure joy. Zero macros counted by order of the Chief Dietitian."
+          </p>
+        </div>
+      </div>
+
+      <NavBtn onClick={next} icon="🏮">
+        Step Into Kashmir’s Twilight
+      </NavBtn>
+    </Pg>
+  );
+}
+
+/* ---------- Chapter 5: Dal Lake Lantern Finale ---------- */
+function C5() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setShow(true), 3200);
+    return () => clearTimeout(t);
+  }, []);
+
+  return (
+    <Pg cls="min-h-screen flex flex-col items-center justify-center text-center px-5 gap-8 py-16">
+      {/* Glowing Interactive Moon */}
+      <button
+        aria-label="Moon"
+        onClick={() => fx('shoot')}
+        className="fixed top-16 right-[10%] w-20 h-20 md:w-28 md:h-28 rounded-full z-30 transition-transform active:scale-90"
+        style={{
+          background: 'radial-gradient(circle at 35% 35%, #fffde8, #f4e7ad 60%, #d8be6c)',
+          boxShadow: '0 0 70px 25px rgba(255, 238, 175, 0.4)'
+        }}
+      />
+
+      <div className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/20 text-xs tracking-widest uppercase text-amber-200">
+        ✨ Dal Lake Under The Winter Stars
+      </div>
+
+      <M.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 1.4 }}
+        className="font-serif italic text-3xl md:text-5xl text-amber-100 max-w-3xl leading-snug"
+      >
+        "Every birthday with you is the beginning of another breathtaking chapter."
+      </M.p>
+
+      <AP>
+        {show && (
+          <M.div
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1.3 }}
+            className="glass rounded-3xl p-8 md:p-14 max-w-xl shadow-2xl border border-amber-300/30"
+            style={{ background: 'rgba(255, 180, 70, 0.14)' }}
+          >
+            <h2
+              onClick={e => fx('confetti', e.clientX, e.clientY)}
+              className="font-disp font-black text-4xl md:text-6xl text-amber-200 cursor-pointer select-none"
+            >
+              Happy Birthday, Huma ❤️
+            </h2>
+            <p className="font-serif italic text-2xl md:text-3xl mt-5 leading-relaxed text-amber-100">
+              Thank you for making my entire world infinitely brighter. Wishing you a lifetime overflowing with laughter, glowing health, and endless love.
+            </p>
+            <div className="mt-6 pt-5 border-t border-amber-300/20 text-sm font-hand text-3xl text-amber-200">
+              Forever yours, with all my love ❤️
+            </div>
+          </M.div>
+        )}
+      </AP>
+      <div className="text-xs text-amber-200/60 mt-4">
+        (Tap the glowing moon in the sky to make a shooting star wish ⭐)
+      </div>
+    </Pg>
+  );
+}
+
+/* ---------- App Root, Audio Player & Preview Navigator ---------- */
+function fadeAudio(a, to, ms = 2500) {
+  clearInterval(a._t);
+  if (to > 0 && a.paused) a.play().catch(() => {});
+  const from = a.volume, t0 = Date.now();
+  a._t = setInterval(() => {
+    const k = Math.min(1, (Date.now() - t0) / ms);
+    a.volume = Math.max(0, Math.min(1, from + (to - from) * k));
+    if (k >= 1) {
+      clearInterval(a._t);
+      if (!to) a.pause();
+    }
+  }, 50);
+}
+
+function App() {
+  const [st, setSt] = useState((PREV && !Q.get('gate')) || Date.now() >= UNLOCK ? 'load' : 'gate');
+  const [on, setOn] = useState(false);
+  const [ask, setAsk] = useState(true);
+
+  const au = useMemo(() => {
+    const g = new Audio('./Goblin.mp3');
+    const b = new Audio('./Birthday.mp3');
+    g.loop = b.loop = true;
+    g.volume = b.volume = 0;
+    return { g, b };
+  }, []);
+
+  // Audio state transitions
+  useEffect(() => {
+    if (!on) {
+      fadeAudio(au.g, 0, 400);
+      fadeAudio(au.b, 0, 400);
+    } else if (st === 'seoul' || st === 'c3') {
+      fadeAudio(au.b, 0, 1000);
+      fadeAudio(au.g, 0.75, 2000);
+    } else if (st === 'reasons' || st === 'coupons' || st === 'c4' || st === 'c5') {
+      fadeAudio(au.g, 0, 3000);
+      fadeAudio(au.b, 0.8, 3000);
+    } else {
+      fadeAudio(au.g, 0, 800);
+      fadeAudio(au.b, 0, 800);
+    }
+  }, [on, st]);
+
+  useEffect(() => {
+    document.body.style.overflowY = ['seoul', 'c3', 'reasons', 'coupons', 'c4', 'c5'].includes(st) ? 'auto' : 'hidden';
+    scrollTo(0, 0);
+  }, [st]);
+
+  // Long press for butterfly burst
+  useEffect(() => {
+    let t;
+    const d = () => { t = setTimeout(() => fx('bfly'), 2800); };
+    const u = () => clearTimeout(t);
+    addEventListener('pointerdown', d);
+    addEventListener('pointerup', u);
+    addEventListener('pointercancel', u);
+    return () => {
+      removeEventListener('pointerdown', d);
+      removeEventListener('pointerup', u);
+      removeEventListener('pointercancel', u);
+    };
+  }, []);
+
+  const p = SC[st] || SC.load;
+  const mode = st === '404' ? 'load' : st;
+
+  return (
+    <div className="relative min-h-screen text-white font-sans overflow-x-hidden selection:bg-amber-400 selection:text-slate-900">
+      {/* Background Layer */}
+      <div className="fixed inset-0 z-0">
+        <AP>
+          <M.div
+            key={p.id}
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2 }}
+          >
+            <Scene p={p} />
+          </M.div>
+        </AP>
+      </div>
+
+      {/* Particle Canvas */}
+      <FX mode={mode} />
+
+      {/* Chapter Router */}
+      <AP mode="wait">
+        {st === 'gate' && <Gate key="g" done={() => setSt('load')} />}
+        {st === 'load' && <Load key="l" done={() => setSt('404')} />}
+        {st === '404' && <E404 key="4" go={() => { fx('swirl'); setSt('seoul'); }} />}
+        {st === 'seoul' && <SeoulScene key="s" next={() => setSt('c3')} />}
+        {st === 'c3' && <C3 key="3" next={() => setSt('reasons')} />}
+        {st === 'reasons' && <ReasonsScene key="rs" next={() => setSt('coupons')} />}
+        {st === 'coupons' && <CouponsScene key="cp" next={() => setSt('c4')} />}
+        {st === 'c4' && <C4 key="c4" next={() => setSt('c5')} />}
+        {st === 'c5' && <C5 key="5" />}
+      </AP>
+
+      {/* Audio Consent Prompt */}
+      <AP>
+        {ask && !on && (
+          <M.div
+            initial={{ opacity: 0, y: -25 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -25 }}
+            className="fixed top-20 left-1/2 -translate-x-1/2 z-50 glass rounded-2xl px-5 py-3 flex items-center gap-4 text-sm w-[92%] max-w-lg text-white shadow-2xl"
+            style={{ background: 'rgba(18, 25, 45, 0.75)' }}
+          >
+            <span className="flex-1 font-medium">For the best cinematic audio experience, enable sound 🎵</span>
+            <button
+              onClick={() => { sounds.init(); setOn(true); setAsk(false); }}
+              className="rounded-full bg-gradient-to-r from-amber-300 to-amber-400 text-slate-900 font-bold px-4 py-1.5 whitespace-nowrap shadow-md hover:scale-105 active:scale-95 transition"
+            >
+              Turn On Audio
+            </button>
+            <button onClick={() => setAsk(false)} aria-label="Dismiss" className="opacity-60 hover:opacity-100">
+              ✕
+            </button>
+          </M.div>
+        )}
+      </AP>
+
+      {/* Floating Music Vinyl Button */}
+      <button
+        onClick={() => { sounds.init(); setOn(!on); }}
+        aria-label="Toggle music"
+        className="fixed top-4 right-4 z-50 glass rounded-full pl-2 pr-4 py-2 flex items-center gap-3 text-white shadow-xl hover:scale-105 transition"
+        style={{ background: 'rgba(18, 25, 45, 0.65)' }}
+      >
+        <M.div
+          animate={on ? { rotate: 360 } : {}}
+          transition={{ repeat: Infinity, duration: 4, ease: 'linear' }}
+          className="w-9 h-9 rounded-full flex items-center justify-center relative"
+          style={{ background: '#1a1a1a', boxShadow: 'inset 0 0 0 10px #222, inset 0 0 0 12px #f7b733' }}
+        >
+          <div className="w-2 h-2 rounded-full bg-white" />
+        </M.div>
+        <span className="flex items-end gap-0.5 h-4">
+          {[0, 1, 2, 3].map(i => (
+            <M.i
+              key={i}
+              className="block w-0.5 h-full bg-amber-300 rounded origin-bottom"
+              animate={on ? { scaleY: [0.2, 1, 0.35, 0.8, 0.2] } : { scaleY: 0.2 }}
+              transition={{ repeat: Infinity, duration: 0.9, delay: i * 0.15 }}
+            />
+          ))}
+        </span>
+        <span className="text-xs font-mono font-bold text-amber-200">{on ? 'PAUSE' : 'PLAY'}</span>
+      </button>
+
+      {/* Secret / Preview Stage Switcher */}
+      {PREV && (
+        <div className="fixed bottom-3 left-3 z-50 flex flex-wrap gap-1 text-xs">
+          {['gate', 'load', '404', 'seoul', 'c3', 'reasons', 'coupons', 'c4', 'c5'].map(stage => (
+            <button
+              key={stage}
+              onClick={() => setSt(stage)}
+              className={`rounded px-2 py-1 font-mono transition ${st === stage ? 'bg-amber-400 text-slate-900 font-bold' : 'glass text-white/80'}`}
+              style={{ background: st === stage ? '#f7b733' : 'rgba(18,25,45,0.7)' }}
+            >
+              {stage}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
