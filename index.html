@@ -269,13 +269,13 @@ function C3({next}){
 const TEN=[['🍳','Your handmade omelette','No restaurant, no chef, no five-star buffet has ever beaten it. It tastes like home because you made it.'],
 ['🤝','Your hand in mine, every time I leave','Even for a small walk. You hold on a little longer at the door, and I carry that warmth all day darling.'],
 ['🧊','Your cold hands','Freezing always. You go inside the Igluu😂 and I complain loudly'],
-['🍟','The “just one bite” tax','You say one bite. We both know it’s my plate, your fork, and you have already won.'],
-['📺','Your live drama commentary','“Don’t trust her.” “He’s lying.” “Mark my words.” Darling, you’re better than the writers.'],
-['🥣','How you look after everyone','You spend your day helping people feel better, then come home and ask if I’ve eaten properly. Who takes care of the caretaker? Me. Always me.'],
-['💍','The day you gave me a chance to be real','You were afraid I’d be a typical serious khadoos. Then you spent that wonderful time with me, and I saw the relief on your face. In that moment I promised myself: I will always make you feel this safe.'],
+['📺','Talking while watching','The silly question/answers while watching the TV'],
+['🍭','Life feels sweet','With you it feels like a happy episode'],
+['🥣','How you look after everyone','You spend your day helping people feel better, then ask if I’ve eaten properly. Who takes care of the caretaker?'],
+['💍','The day you gave me a chance to be real','You were afraid I’d be a typical serious khadoos. Then you spent that wonderful time with me and I saw the relief on your face. In that moment I promised myself: I will always make you feel this safe.'],
 ['❄️','The way you love snow','Your whole face lights up like it’s a surprise every single time. I could watch you watch the snow forever.'],
-['🏠','How you wait for me','Late nights, long days, and somehow you’re still there. Home was never a place, babe. It’s the person who waits.'],
-['❤️','You. Just you.','If I could choose again, from every life and every person, I would walk straight back to you. Happy Birthday, my darling. I love you more than I ever say out loud.']];
+['🏠','How you wait for me','Late nights, long days, and somehow you’re still there. Home was never a place... It’s the person who waits.'],
+['❤️','You. Just you.','If I could choose again, from every life and every person, I would walk straight back to you. Happy Birthday my darling. I love you more than I ever say out loud.']];
 function TenCh({next}){
  const[n,setN]=useState(0),done=n>=10;
  const rev=i=>{if(i!==n)return;setN(n+1);sfx(i>5?'tada':'chime');fx('hearts',innerWidth/2,innerHeight*.55);setTimeout(()=>{const e=document.getElementById('t'+(i+1));e&&e.scrollIntoView({behavior:'smooth',block:'center'})},700)};
