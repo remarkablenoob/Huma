@@ -268,16 +268,16 @@ function C3({next}){
  </Pg>}
 
 /* ---------- Chapter 3.2: Ten things ---------- */
-const TEN=[['🍳','Your handmade omelette','No restaurant, no chef, no five-star buffet has ever beaten it. It tastes like home because you made it.'],
-['🤝','Your hand in mine, every time I leave','Even for a tiny errand. You hold on a little longer at the door, and I carry that warmth all day, darling.'],
-['🧊','Your cold hands','Freezing, always. You press them on my neck like it’s a prank, I complain loudly, and I would never trade it.'],
-['🍟','The “just one bite” tax','You say one bite. We both know it’s my plate, your fork, and you have already won.'],
-['📺','Your live drama commentary','“Don’t trust her.” “He’s lying.” “Mark my words.” Darling, you’re better than the writers.'],
-['🥣','How you look after everyone','You spend your day helping people feel better, then come home and ask if I’ve eaten properly. Who takes care of the caretaker? Me. Always me.'],
-['💍','The day you gave me a chance to be real','You were afraid I’d be a typical serious khadoos. Then you spent that wonderful time with me, and I saw the relief on your face. In that moment I promised myself: I will always make you feel this safe.'],
+const TEN=[['👋','Saying bye-byee, then finding another reason to stay together for five more minutes.'],
+['🤝','Your hand in mine, every time I leave','Even for a tiny errand. You hold on a little longer at the door, and I carry that warmth all day.'],
+['🍴','Taking forever to decide what to order'],
+['🥰','Catching each other staring and immediately breaking into a silly smile.'],
+['🛏️','Somehow, two pillows are never enough when we’re sleeping together..'],
+['🥣','How you look after everyone','You spend your day helping people feel better, then ask if I’ve eaten properly. Who takes care of the caretaker? that’s U. Always YOUU.'],
+['💍','The day you gave me a chance to be real','In that moment I promised myself: I will always make you feel this safe.'],
 ['❄️','The way you love snow','Your whole face lights up like it’s a surprise every single time. I could watch you watch the snow forever.'],
-['🏠','How you wait for me','Late nights, long days, and somehow you’re still there. Home was never a place, babe. It’s the person who waits.'],
-['❤️','You. Just you.','If I could choose again, from every life and every person, I would walk straight back to you. Happy Birthday, my darling. I love you more than I ever say out loud.']];
+['🏠','How you wait for me','Late nights, long days, and somehow you’re still there. Home was never a place babe. It’s the person who waits.'],
+['❤️','You. Just you.','If I could choose again, from every life and every person, I would walk straight back to you. Happy Birthday Huma darling. I love you more than I ever say out loud.']];
 function TenCh({next}){
  const[n,setN]=useState(0),done=n>=10;
  const rev=i=>{if(i!==n)return;setN(n+1);sfx(i>5?'tada':'chime');fx('hearts',innerWidth/2,innerHeight*.55);setTimeout(()=>{const e=document.getElementById('t'+(i+1));e&&e.scrollIntoView({behavior:'smooth',block:'center'})},700)};
@@ -294,7 +294,7 @@ function TenCh({next}){
  </Pg>}
 
 /* ---------- Chapter 3.5: Gift box + vouchers ---------- */
-const VCH=[['🎬','Late-Night Movie Time','Your pick of drama, my snacks, my full attention. Plot commentary fully welcome.'],['👑','Chief Relaxation Order','One dinner party, hosted entirely by me. You sit, you smile, you do nothing.'],['👨‍🍳','Master Chef Exemption','The kitchen is closed for you. I cook whatever you crave. Yes, I’ll wash up too.'],['🍟','Fry Tax Waiver','One plate of fries, completely untouched by me. (I will watch. Sadly.)'],['❄️','Cold Evening Walk','Hand in hand, hot chocolate, no rush. Your cold hands go straight in my pocket.'],['🤗','Unlimited Hugs','Redeem anytime, anywhere, no questions asked.']];
+const VCH=[['🎬','Late-Night Movie Time','Your pick of drama, my snacks, my full attention. Plot commentary fully welcome.'],['👑','Chief Relaxation Order','One dinner party, hosted entirely by me. You sit, you smile, you do nothing.'],['👨‍🍳','Master Chef Exemption','The kitchen is closed for you. I cook whatever you crave.'],['🍟','Fried/Crispy','One plate of munching, Soon, Insha Allah'],['❄️','Cold Evening Walk','Hand in hand, hot chocolate, no rush. Your cold hands go straight in my pocket.'],['🤗','Unlimited Hugs','Redeem anytime, anywhere, no questions asked.']];
 function GiftCh({next}){
  const[op,setOp]=useState(false),[red,setRed]=useState({}),gold={background:'linear-gradient(90deg,#d9a52e,#ffe08a,#d9a52e)'};
  const open=()=>{if(op)return;setOp(true);sfx('tada');fx('confetti');fx('hearts')};
