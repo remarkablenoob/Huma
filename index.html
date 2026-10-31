@@ -180,11 +180,11 @@ function E404({go}){
   <Btn onClick={go}>Refresh &amp; Find It 🎉</Btn></Pg>}
 
 /* ---------- Chapter 2.5: Seoul ---------- */
-const BAN=[['Scene 1 · The Kitchen','“Bas ek bite, bola tha!” says Huma, guarding her plate. Farhan, already holding the last fry: “Darling, it was a very small plate.”'],
-['Scene 2 · The Sofa','She pauses the episode to explain the plot to the one person who has watched it with her. Twice. He nods like a man who understood everything. (He did not.)'],
-['Scene 3 · Pakistani Drama Night','“Mark my words, it’s the mother-in-law.” “Huma, it’s episode two.” “Exactly. She’s early.”'],
-['Scene 4 · The Tangerine Rule','When life gives us tangerines, she peels, he eats, and they both pretend the split was fair.'],
-['Final Scene · Seoul','No subtitles needed. 사랑해 means “I love you”, and darling, I mean it in every language.']];
+const BAN=[['Scene 1 · Kitchen Obsession','busy baking, arranging utensils or cooking… u get cute back hugs, and I get a little"💋" which makes my day ❤️'],
+['Scene 2 · Chai Dates','Missing our subah-shaam ki chai on the sofa. InshaAllah, our little ritual resumes soon! 😘'],
+['Scene 3 · Weekly Ts ','Those cute little gossip sessions where you spill all the T, and I'm all ears!😂'],
+['Scene 4 · Mere Haath Ka Niwala','One bite from my hands, and your reaction “Ummmmmm… ye zyada tasty hai!”🍛'],
+['Final Scene · FarHuma','No subtitles needed. 사랑해 means “I love you” and I mean it in every language.']];
 function SeoulCh({next}){
  const[i,setI]=useState(0),[lk,setLk]=useState(false);
  const lock=e=>{if(lk)return;setLk(true);sfx('lock');const x=e.clientX,y=e.clientY;setTimeout(()=>{sfx('chime');fx('hearts',x,y)},350)};
